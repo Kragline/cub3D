@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/18 17:28:00 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/18 19:21:15 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,23 @@
 # define BLUE "\033[0;34m"
 # define PURPLE "\033[0;35m"
 
+typedef enum e_state
+{
+	ST_ELEMS,
+	ST_MAP,
+	ST_DONE
+}	t_state;
+
 typedef struct s_textures
 {
 	void	*north;
+	char	*north_name;
 	void	*south;
+	char	*south_name;
 	void	*east;
+	char	*east_name;
 	void	*west;
+	char	*west_name;
 }	t_textures;
 
 typedef struct s_colors
@@ -60,7 +71,7 @@ void	print_error(char *message);
 void	print_usage(void);
 
 //			validate
-bool	valiate(char *filname);
+bool	valiate(char *filname, t_cub3D *cub);
 
 //			init
 t_cub3D	*init_cub(void);

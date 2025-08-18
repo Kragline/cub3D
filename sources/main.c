@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:49:40 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/18 17:23:03 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/18 19:57:13 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 	cub = init_cub();
 	if (!cub)
 		return (print_error("Init error"), 1);
-	if (!valiate(argv[1]))
+	if (!valiate(argv[1], cub))
 		return (free_cub(cub), 1);
 	free_cub(cub);
 	return (0);
