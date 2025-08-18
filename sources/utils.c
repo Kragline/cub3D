@@ -6,11 +6,26 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:05:01 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/18 16:15:08 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/18 22:31:41 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+bool	is_space(char c)
+{
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (true);
+	return (false);
+}
+
+bool	is_map_char(char c)
+{
+	if (c == '0' || c == '1' || c == 'N'
+		|| c == 'S' || c == 'E' || c == 'W')
+		return (true);
+	return (false);
+}
 
 bool	ends_with_cub(char *filename)
 {

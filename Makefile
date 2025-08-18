@@ -17,7 +17,7 @@ HEADER_DIR = include/
 SOURCES_DIR = sources/
 OBJECTS_DIR = objects/
 
-FILENAMES = main utils validation init free
+FILENAMES = main utils parsing init free
 
 SOURCES = $(addsuffix .c, $(addprefix $(SOURCES_DIR), $(FILENAMES)))
 OBJECTS = $(addsuffix .o, $(addprefix $(OBJECTS_DIR), $(FILENAMES)))
@@ -46,7 +46,7 @@ $(NAME): $(LIBFT) $(OBJECTS) Makefile
 
 $(LIBFT):
 	@echo "$(BLUE)Compiling $@...$(WHITE)🔨"
-	@make -sC libft
+	@make bonus -sC libft
 	@echo "$(GREEN)Done!$(WHITE)✔︎"
 
 $(OBJECTS_DIR)%.o: $(SOURCES_DIR)%.c

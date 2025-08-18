@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/18 19:21:15 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/18 23:43:43 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_map
 	char	player_dir;
 	int		player_x;
 	int		player_y;
+	int		line_count;
 	char	**grid;
 }	t_map;
 
@@ -69,9 +70,11 @@ typedef struct s_cub3D
 bool	ends_with_cub(char *filename);
 void	print_error(char *message);
 void	print_usage(void);
+bool	is_space(char c);
+bool	is_map_char(char c);
 
-//			validate
-bool	valiate(char *filname, t_cub3D *cub);
+//			parsing
+bool	parse_the_map(char *filname, t_cub3D *cub);
 
 //			init
 t_cub3D	*init_cub(void);
