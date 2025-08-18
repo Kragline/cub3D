@@ -1,12 +1,13 @@
 NAME = cub3D
 CC = cc
 
-CCFLAGS = -Wall -Wextra -Werror
+CCFLAGS = -Wall -Wextra -Werror -g3
 MLXFLAGS = -Lmlx_Linux -lmlx_Linux -L ./minilibx-linux -Imlx_Linux -L ./libft -lft -lXext -lX11 -lm -lz
 
 GREEN = \033[1;32m
 YELLOW = \033[1;33m
 BLUE = \033[0;34m
+BLUE_BOLD = \033[1;34m
 PURPLE = \033[1;35m
 WHITE = \033[0m
 
@@ -16,7 +17,7 @@ HEADER_DIR = include/
 SOURCES_DIR = sources/
 OBJECTS_DIR = objects/
 
-FILENAMES = main
+FILENAMES = main utils validation init free
 
 SOURCES = $(addsuffix .c, $(addprefix $(SOURCES_DIR), $(FILENAMES)))
 OBJECTS = $(addsuffix .o, $(addprefix $(OBJECTS_DIR), $(FILENAMES)))
@@ -28,13 +29,13 @@ $(NAME): $(LIBFT) $(OBJECTS) Makefile
 	@$(CC) $(CCFLAGS) -I$(HEADER_DIR) $(LIBFT) $(OBJECTS) -o $(NAME) $(MLXFLAGS)
 	@echo "$(GREEN)Done!$(WHITE)✅️"
 	@clear
-	@echo "$(GREEN)"'                __       ' "$(BLUE)" '   __    ____      ' "$(WHITE)"
-	@echo "$(GREEN)"'               /\ \     ' "$(BLUE)" '  / __ \/\  __ \    ' "$(WHITE)"
-	@echo "$(GREEN)"'  ___    __  __\ \ \____ ' "$(BLUE)" '/\_\ \ \ \\ \/\ \  ' "$(WHITE)"
-	@echo "$(GREEN)"' / ___\ /\\ \/\ \\\ \  __ \' "$(BLUE)" '\/_/_\ <\ \ \ \ \  ' "$(WHITE)"
-	@echo "$(GREEN)"'/\ \__/\\\ \ \_\ \\\ \ \_\ \' "$(BLUE)" ' /\ \_\ \\ \ \_\ \' "$(WHITE)"
-	@echo "$(GREEN)"'\ \____/ \ \____/ \ \____/' "$(BLUE)" ' \ \____/\ \____/' "$(WHITE)"
-	@echo "$(GREEN)"' \/___/   \/___/   \/___/' "$(BLUE)" '   \/___/  \/___/ ' "$(WHITE)"
+	@echo "$(GREEN)"'                __       ' "$(BLUE_BOLD)" '   __    ____      ' "$(WHITE)"
+	@echo "$(GREEN)"'               /\ \     ' "$(BLUE_BOLD)" '  / __ \/\  __ \    ' "$(WHITE)"
+	@echo "$(GREEN)"'  ___    __  __\ \ \____ ' "$(BLUE_BOLD)" '/\_\ \ \ \\ \/\ \  ' "$(WHITE)"
+	@echo "$(GREEN)"' / ___\ /\\ \/\ \\\ \  __ \' "$(BLUE_BOLD)" '\/_/_\ <\ \ \ \ \  ' "$(WHITE)"
+	@echo "$(GREEN)"'/\ \__/\\\ \ \_\ \\\ \ \_\ \' "$(BLUE_BOLD)" ' /\ \_\ \\ \ \_\ \' "$(WHITE)"
+	@echo "$(GREEN)"'\ \____/ \ \____/ \ \____/' "$(BLUE_BOLD)" ' \ \____/\ \____/' "$(WHITE)"
+	@echo "$(GREEN)"' \/___/   \/___/   \/___/' "$(BLUE_BOLD)" '   \/___/  \/___/ ' "$(WHITE)"
 	@echo -n "$(YELLOW)"
 	@echo " _                                                       _                              _       "
 	@echo "| |_ _ _    ___ ___ ___ ___ ___ ___ ___ _ _    ___ ___ _| |   ___ ___ _____ ___ ___ ___| |_ ___ "

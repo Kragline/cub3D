@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 15:49:40 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/18 17:23:03 by armarake         ###   ########.fr       */
+/*   Created: 2025/08/18 17:11:23 by armarake          #+#    #+#             */
+/*   Updated: 2025/08/18 17:28:51 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "cub3D.h"
 
-int	main(int argc, char **argv)
+static void	free_grid(char ***grid)
 {
-	t_cub3D		*cub;
+	int	i;
 
-	if (argc != 2)
-		return (print_usage(), 1);
-	cub = init_cub();
+	i = 0;
+	while ((*grid)[i])
+	{
+		free((*grid)[i]);
+		i++;
+	}
+	free((*grid));
+}
+
+void	free_cub(t_cub3D *cub)
+{
 	if (!cub)
-		return (print_error("Init error"), 1);
-	if (!valiate(argv[1]))
-		return (free_cub(cub), 1);
-	free_cub(cub);
-	return (0);
+		return ;
+	if (cub->map->grid)
+		free_grid(&cub->map->grid);
+	// free mlx textures
+	// destroy mlx window and connection
+	free(cub->colors);
+	free(cub->map);
+	free(cub->textures);
+	free(cub);
 }

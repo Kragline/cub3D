@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/17 15:49:40 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/18 17:23:03 by armarake         ###   ########.fr       */
+/*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
+/*   Updated: 2025/08/18 17:43:03 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "cub3D.h"
 
-int	main(int argc, char **argv)
+bool	valiate(char *filname)
 {
-	t_cub3D		*cub;
+	int		map_fd;
 
-	if (argc != 2)
-		return (print_usage(), 1);
-	cub = init_cub();
-	if (!cub)
-		return (print_error("Init error"), 1);
-	if (!valiate(argv[1]))
-		return (free_cub(cub), 1);
-	free_cub(cub);
-	return (0);
+	if (!ends_with_cub(filname))
+		return (print_error("Map name must end with .cub"), false);
+	map_fd = open(filname, O_RDONLY);
+	if (map_fd == -1)
+		return (print_error("Can't open the map"), false);
+	
+	return (close(map_fd), true);
 }
