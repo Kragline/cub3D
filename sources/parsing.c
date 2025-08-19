@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 01:28:14 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/20 02:42:05 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static bool	line_is_empty(char *line)
 {
 	int	i;
 
+	if (!line)
+		return (true);
 	if (line[0] == '\0' || line[0] == '\n')
 		return (true);
 	i = 0;
@@ -79,6 +81,10 @@ static bool	is_map_line(char *line)
 {
 	int		i;
 
+	if (!line)
+		return (false);
+	if (line_is_empty(line))
+		return (false);
 	i = 0;
 	while (line[i])
 	{
@@ -137,6 +143,13 @@ static void	allocate_map(t_cub3D *cub, char **line)
 			*line = NULL;
 		}
 		*line = get_next_line(cub->map->map_fd);
+		if (!is_map_line(*line))
+		{
+			get_next_line(-1);
+			free(*line);
+			line = NULL;
+			break ;
+		}
 		if (*line)
 		{
 			line_spawn_count = spawn_point_count(*line);
@@ -159,9 +172,6 @@ static void	allocate_map(t_cub3D *cub, char **line)
 		free(map_list);
 		map_list = tmp;
 	}
-	if (*line)
-		free(*line);
-	get_next_line(-1);
 	cub->map->grid[cub->map->line_count] = NULL;
 }
 
