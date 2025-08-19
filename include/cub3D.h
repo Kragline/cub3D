@@ -13,6 +13,9 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include <X11/Xlib.h>
+# include <X11/Xlib.h>
+# include <X11/keysym.h>
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
 # include <stdbool.h>
@@ -22,6 +25,9 @@
 # define GREEN "\033[0;32m"
 # define BLUE "\033[0;34m"
 # define PURPLE "\033[0;35m"
+
+# define WIDTH 1080
+# define HEIGHT 720
 
 typedef enum e_state
 {

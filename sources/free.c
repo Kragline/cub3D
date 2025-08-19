@@ -44,5 +44,8 @@ void	free_cub(t_cub3D *cub)
 	free(cub->colors);
 	free(cub->map);
 	free(cub->textures);
+	mlx_destroy_window(cub->mlx, cub->mlx_win);
+	mlx_destroy_display(cub->mlx);
+	free(cub->mlx);
 	free(cub);
 }
