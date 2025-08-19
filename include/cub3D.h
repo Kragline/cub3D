@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/19 18:33:04 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/20 00:54:21 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		spawn_point_count(char *line);
 char	find_spawn_point(char *line);
 
 //			parsing
-bool	parse_the_map(char *filname, t_cub3D *cub);
+bool	parse_the_map(char *filename, t_cub3D *cub);
 
 //			init
 t_cub3D	*init_cub(void);

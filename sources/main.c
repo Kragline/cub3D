@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:49:40 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/19 18:23:07 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/20 00:30:51 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_values(t_cub3D *cub)
 {
 	int	i;
-	
+
 	i = 0;
 	ft_printf("%d\n", cub->map->line_count);
 	while (cub->map->grid[i])
@@ -42,6 +42,7 @@ int	main(int argc, char **argv)
 	if (!parse_the_map(argv[1], cub))
 		return (free_cub(cub), 1);
 	print_values(cub);
+	init_window(cub);
 	free_cub(cub);
 	return (0);
 }

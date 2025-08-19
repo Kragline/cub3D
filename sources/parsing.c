@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/19 18:23:20 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/20 01:28:14 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	line_is_empty(char *line)
 {
 	int	i;
-	
+
 	if (line[0] == '\0' || line[0] == '\n')
 		return (true);
 	i = 0;
@@ -75,27 +75,18 @@ static bool	try_parse_element(char *line, t_cub3D *cub)
 	return (false);
 }
 
-static bool	looks_like_map_line(char *line)
+static bool	is_map_line(char *line)
 {
 	int		i;
-	bool	saw_map_char;
 
 	i = 0;
-	saw_map_char = false;
 	while (line[i])
 	{
-		if (is_space(line[i]))
-		{
-			i++;
-			continue ;
-		}
-		if (is_map_char(line[i]))
-			saw_map_char = true;
-		else
+		if (!is_map_char(line[i]) && !is_space(line[i]))
 			return (false);
 		i++;
 	}
-	return (saw_map_char);
+	return (true);
 }
 
 static void	parsing_error(t_cub3D *cub, t_list **map_list, char **line, char *message)
@@ -114,6 +105,11 @@ static void	parsing_error(t_cub3D *cub, t_list **map_list, char **line, char *me
 	}
 	get_next_line(-1);
 	print_error(message);
+	if (*line)
+	{	
+		ft_putstr_fd("At line `", STDERR_FILENO);
+		ft_putstr_fd(*line, STDERR_FILENO);
+	}
 	close(cub->map->map_fd);
 	free_cub(cub);
 	free(*line);
@@ -133,7 +129,7 @@ static void	allocate_map(t_cub3D *cub, char **line)
 	spawn_dir = '\0';
 	map_list = ft_lstnew(ft_strdup(*line));
 	(cub->map->line_count)++;
-	while (*line && looks_like_map_line(*line))
+	while (*line && is_map_line(*line))
 	{
 		if (*line)
 		{
@@ -181,13 +177,15 @@ static void	read_map(t_cub3D *cub)
 	while (state != ST_DONE)
 	{
 		if (change_line)
-		{			
+		{
 			if (line)
 			{
 				free(line);
 				line = NULL;
 			}
 			line = get_next_line(cub->map->map_fd);
+			if (!line)
+				parsing_error(cub, NULL, &line, "GNL returned NULL");
 		}
 		if (state == ST_ELEMS)
 		{
@@ -195,7 +193,7 @@ static void	read_map(t_cub3D *cub)
 				continue;
 			if (try_parse_element(line, cub))
 				continue;
-			if (looks_like_map_line(line))
+			if (is_map_line(line))
 			{
 				state = ST_MAP;
 				change_line = false;
@@ -218,13 +216,30 @@ static void	read_map(t_cub3D *cub)
 	get_next_line(-1);
 }
 
-bool	parse_the_map(char *filname, t_cub3D *cub)
+bool	file_is_empty(char *filname)
 {
-	if (!ends_with_cub(filname))
+	int		fd;
+	char	buf;
+	ssize_t	bytes_read;
+
+	fd = open(filname, O_RDONLY);
+	if (fd == -1)
+		return (print_error("Can't open the map"), true);
+	bytes_read = read(fd, &buf, 1);
+	if (!bytes_read)
+		return (print_error("File is empty"), close(fd), true);
+	return (close(fd), false);
+}
+
+bool	parse_the_map(char *filename, t_cub3D *cub)
+{
+	if (!ends_with_cub(filename))
 		return (print_error("Map name must end with .cub"), false);
-	cub ->map->map_fd = open(filname, O_RDONLY);
-	if (cub ->map->map_fd == -1)
+	cub->map->map_fd = open(filename, O_RDONLY);
+	if (cub->map->map_fd == -1)
 		return (print_error("Can't open the map"), false);
+	if (file_is_empty(filename))
+		return (false);
 	read_map(cub);
-	return (close(cub ->map->map_fd), true);
+	return (true);
 }

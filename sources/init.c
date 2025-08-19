@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/19 18:33:36 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/20 00:26:37 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,5 @@ t_cub3D	*init_cub(void)
 	cub->textures->south_name = NULL;
 	cub->mlx = NULL;
 	cub->mlx_win = NULL;
-	init_window(cub);
 	return (cub);
 }
