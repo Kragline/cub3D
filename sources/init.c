@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/18 23:46:11 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:33:36 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,26 @@ static int	key_handle(int keysym, t_cub3D *cub)
 	return (0);
 }
 
+void	init_window(t_cub3D *cub)
+{
+	cub->mlx = mlx_init();
+	if (!cub->mlx)
+		free_cub(cub);
+	cub->mlx_win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "cub3D");
+	if (!cub->mlx_win)
+		free_cub(cub);
+	mlx_hook(cub->mlx_win,
+			KeyPress, KeyPressMask,
+			key_handle, cub);
+	mlx_hook(cub->mlx_win,
+			ButtonPress, ButtonPressMask,
+			mouse_handle, cub);
+	mlx_hook(cub->mlx_win,
+			DestroyNotify, StructureNotifyMask,
+			close_handle, cub);
+	mlx_loop(cub->mlx);
+}
+
 t_cub3D	*init_cub(void)
 {
 	t_cub3D	*cub;
@@ -54,6 +74,7 @@ t_cub3D	*init_cub(void)
 	if (!cub->textures)
 		return (free(cub->map), free(cub->colors), free(cub), NULL);
 	cub->map->grid = NULL;
+	cub->map->map_fd = -1;
 	cub->map->line_count = 0;
 	cub->textures->east = NULL;
 	cub->textures->east_name = NULL;
@@ -63,21 +84,8 @@ t_cub3D	*init_cub(void)
 	cub->textures->north_name = NULL;
 	cub->textures->south = NULL;
 	cub->textures->south_name = NULL;
-	cub->mlx = mlx_init();
-	if (!cub->mlx)
-		return (free(cub->map), free(cub->colors), free(cub), NULL);
-	cub->mlx_win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "cub3D");
-	if (!cub->mlx_win)
-		return (mlx_destroy_display(cub->mlx), free(cub->map), free(cub->colors), free(cub), NULL);
-	mlx_hook(cub->mlx_win,
-			KeyPress, KeyPressMask,
-			key_handle, cub);
-	mlx_hook(cub->mlx_win,
-			ButtonPress, ButtonPressMask,
-			mouse_handle, cub);
-	mlx_hook(cub->mlx_win,
-			DestroyNotify, StructureNotifyMask,
-			close_handle, cub);
-	mlx_loop(cub->mlx);
+	cub->mlx = NULL;
+	cub->mlx_win = NULL;
+	init_window(cub);
 	return (cub);
 }

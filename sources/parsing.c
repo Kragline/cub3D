@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/19 00:37:17 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:23:20 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,41 @@ static bool	looks_like_map_line(char *line)
 	return (saw_map_char);
 }
 
-static void	allocate_map(int map_fd, t_cub3D *cub, char **line)
+static void	parsing_error(t_cub3D *cub, t_list **map_list, char **line, char *message)
+{
+	t_list	*tmp;
+
+	if (map_list && *map_list)
+	{
+		while (*map_list)
+		{
+			tmp = (*map_list)->next;
+			free((*map_list)->content);
+			free((*map_list));
+			*map_list = tmp;
+		}
+	}
+	get_next_line(-1);
+	print_error(message);
+	close(cub->map->map_fd);
+	free_cub(cub);
+	free(*line);
+	exit(1);
+}
+
+static void	allocate_map(t_cub3D *cub, char **line)
 {
 	int		i;
+	int		line_spawn_count;
+	char	spawn_dir;
 	t_list	*tmp;
 	t_list	*map_list;
 
 	i = 0;
+	tmp = NULL;
+	spawn_dir = '\0';
 	map_list = ft_lstnew(ft_strdup(*line));
+	(cub->map->line_count)++;
 	while (*line && looks_like_map_line(*line))
 	{
 		if (*line)
@@ -113,26 +140,36 @@ static void	allocate_map(int map_fd, t_cub3D *cub, char **line)
 			free(*line);
 			*line = NULL;
 		}
-		*line = get_next_line(map_fd);
+		*line = get_next_line(cub->map->map_fd);
 		if (*line)
 		{
-			(cub->map->line_count)++;
+			line_spawn_count = spawn_point_count(*line);
+			if (line_spawn_count > 1 || (line_spawn_count > 0 && spawn_dir))
+				parsing_error(cub, &map_list, line, "Multiple spawn points");
+			else if (line_spawn_count == 1)
+				spawn_dir = find_spawn_point(*line);
 			ft_lstadd_back(&map_list, ft_lstnew(ft_strdup(*line)));
+			(cub->map->line_count)++;
 		}
 	}
+	cub->map->player_dir = spawn_dir;
 	cub->map->grid = malloc(sizeof(char *) * (cub->map->line_count + 1));
 	while (map_list)
 	{
-		cub->map->grid[i] = map_list->content;
+		cub->map->grid[i] = ft_strdup(map_list->content);
 		i++;
 		tmp = map_list->next;
+		free(map_list->content);
 		free(map_list);
 		map_list = tmp;
 	}
-	cub->map->grid[i] = NULL;
+	if (*line)
+		free(*line);
+	get_next_line(-1);
+	cub->map->grid[cub->map->line_count] = NULL;
 }
 
-static void	read_map(int map_fd, t_cub3D *cub)
+static void	read_map(t_cub3D *cub)
 {
 	bool	change_line;
 	char	*line;
@@ -150,7 +187,7 @@ static void	read_map(int map_fd, t_cub3D *cub)
 				free(line);
 				line = NULL;
 			}
-			line = get_next_line(map_fd);
+			line = get_next_line(cub->map->map_fd);
 		}
 		if (state == ST_ELEMS)
 		{
@@ -164,32 +201,30 @@ static void	read_map(int map_fd, t_cub3D *cub)
 				change_line = false;
 				continue;
 			}
-			print_error("Unknown line before map");
-			ft_putstr_fd(line, 1);
+			parsing_error(cub, NULL, &line, "Unknown line before map");
 		}
 		else if (state == ST_MAP)
 		{
-			allocate_map(map_fd, cub, &line);
+			allocate_map(cub, &line);
 			change_line = true;
 			state = ST_DONE;
 		}
 		else
 		{
 			if (!line_is_empty(line))
-				print_error("Non-empty content after map");
+				parsing_error(cub, NULL, &line, "Non-empty content after map");
 		}
 	}
+	get_next_line(-1);
 }
 
 bool	parse_the_map(char *filname, t_cub3D *cub)
 {
-	int		map_fd;
-
 	if (!ends_with_cub(filname))
 		return (print_error("Map name must end with .cub"), false);
-	map_fd = open(filname, O_RDONLY);
-	if (map_fd == -1)
+	cub ->map->map_fd = open(filname, O_RDONLY);
+	if (cub ->map->map_fd == -1)
 		return (print_error("Can't open the map"), false);
-	read_map(map_fd, cub);
-	return (close(map_fd), true);
+	read_map(cub);
+	return (close(cub ->map->map_fd), true);
 }

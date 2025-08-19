@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:05:01 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/18 22:31:41 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:23:28 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,38 @@ bool	is_map_char(char c)
 		|| c == 'S' || c == 'E' || c == 'W')
 		return (true);
 	return (false);
+}
+
+char	find_spawn_point(char *line)
+{
+	int		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == 'N' || line[i] == 'S'
+			|| line[i] == 'E' || line[i] == 'W')
+			return (line[i]);
+		i++;
+	}
+	return ('\0');
+}
+
+int	spawn_point_count(char *line)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] == 'N' || line[i] == 'S'
+			|| line[i] == 'E' || line[i] == 'W')
+			count++;
+		i++;
+	}
+	return (count);
 }
 
 bool	ends_with_cub(char *filename)

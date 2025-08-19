@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 17:11:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/18 19:34:05 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/19 18:31:41 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,18 @@ void	free_cub(t_cub3D *cub)
 		free(cub->textures->north_name);
 	if (cub->textures->south_name)
 		free(cub->textures->south_name);
-	free(cub->colors);
-	free(cub->map);
-	free(cub->textures);
-	mlx_destroy_window(cub->mlx, cub->mlx_win);
-	mlx_destroy_display(cub->mlx);
+	if (cub->map->map_fd)
+		close(cub->map->map_fd);
+	if (cub->colors)
+		free(cub->colors);
+	if (cub->map)
+		free(cub->map);
+	if (cub->textures)
+		free(cub->textures);
+	if (cub->mlx_win)
+		mlx_destroy_window(cub->mlx, cub->mlx_win);
+	if (cub->mlx)
+		mlx_destroy_display(cub->mlx);
 	free(cub->mlx);
 	free(cub);
 }
