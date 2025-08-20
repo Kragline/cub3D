@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 00:54:21 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/20 13:15:43 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
 # include <stdbool.h>
+# include <limits.h>
 
 # define RED "\033[1;31m"
 # define WHITE "\033[0m"

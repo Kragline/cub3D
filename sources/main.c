@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:49:40 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 02:42:21 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/20 23:36:57 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void	print_values(t_cub3D *cub)
 	ft_printf("%s\n", cub->textures->west_name);
 	ft_printf("%s\n", cub->textures->north_name);
 	ft_printf("%s\n", cub->textures->south_name);
+	ft_printf("%d\n", cub->colors->floor);
+	ft_printf("%d\n", cub->colors->ceiling);
 	ft_printf("%c\n", cub->map->player_dir);
-	ft_printf("%d\n", cub->map->line_count);
 }
 
 int	main(int argc, char **argv)

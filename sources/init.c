@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 00:26:37 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/20 13:15:34 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ t_cub3D	*init_cub(void)
 	cub->map->grid = NULL;
 	cub->map->map_fd = -1;
 	cub->map->line_count = 0;
+	cub->colors->ceiling = INT_MIN;
+	cub->colors->floor = INT_MIN;
 	cub->textures->east = NULL;
 	cub->textures->east_name = NULL;
 	cub->textures->west = NULL;

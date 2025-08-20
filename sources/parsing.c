@@ -6,11 +6,39 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 02:42:05 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/20 23:59:23 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+static void	parsing_error(t_cub3D *cub, t_list **map_list, char **line, char *message)
+{
+	t_list	*tmp;
+
+	if (map_list && *map_list)
+	{
+		while (*map_list)
+		{
+			tmp = (*map_list)->next;
+			free((*map_list)->content);
+			free((*map_list));
+			*map_list = tmp;
+		}
+	}
+	get_next_line(-1);
+	print_error(message);
+	if (*line)
+	{
+		ft_putstr_fd("At line `", STDERR_FILENO);
+		ft_putstr_fd(*line, STDERR_FILENO);
+	}
+	close(cub->map->map_fd);
+	free_cub(cub);
+	if (line && *line)
+		free(*line);
+	exit(1);
+}
 
 static bool	line_is_empty(char *line)
 {
@@ -30,50 +58,105 @@ static bool	line_is_empty(char *line)
 	return (true);
 }
 
-static bool	set_value(char *line, char **dest, t_cub3D *cub)
+static void	parse_texture(char **line, int index, char **dest, t_cub3D *cub)
 {
 	int	i;
 	int	start_index;
-	
+
 	if (*dest)
-	{
-		print_error("Duplicate element in map");
-		free_cub(cub);
-		exit(1);
-	}
-	i = 0;
-	while (line[i] && is_space(line[i]))
+		parsing_error(cub, NULL, line, "Duplicate element in map");
+	i = index;
+	while ((*line)[i] && is_space((*line)[i]))
 		i++;
 	start_index = i;
-	while (line[i] && !is_space(line[i]) && line[i] != '\n')
+	while ((*line)[i] && !is_space((*line)[i]) && (*line)[i] != '\n')
 		i++;
-	*dest = ft_substr(line + start_index, 0, i - start_index);
-	return (true);
+	*dest = ft_substr((*line) + start_index, 0, i - start_index);
 }
 
-static bool	try_parse_element(char *line, t_cub3D *cub)
+static int	parse_int_0_255(char *line, int *i)
+{
+	long	value;
+	int		digit_start;
+
+	value = 0;
+	if (line[*i] && line[*i] == ',')
+		(*i)++;
+	if (line[*i] == '\n')
+		return (-1);
+	digit_start = *i;
+	while (line[*i] && is_space(line[*i]))
+		(*i)++;
+	if (line[*i] && !ft_isdigit(line[*i]))
+		return (-1);
+	while (line[*i] && ft_isdigit(line[*i]))
+	{
+		value = value * 10 + (line[*i] - '0');
+		if (value > 255)
+			return (-1);
+		(*i)++;
+	}
+	if (*i == digit_start)
+		return (-1);
+	return ((int)value);
+}
+
+static void	parse_color(char **line, int index, int *dest, t_cub3D *cub)
+{
+	int	i;
+	int	r;
+	int	g;
+	int	b;
+
+	r = INT_MIN;
+	g = INT_MIN;
+	b = INT_MIN;
+	if (*dest != INT_MIN)
+		parsing_error(cub, NULL, line, "Duplicate element in map");
+	i = index;
+	while ((*line)[i] && is_space((*line)[i]))
+		i++;
+	r = parse_int_0_255(*line, &i);
+	if (r < 0)
+		parsing_error(cub, NULL, line, "Wrong value for color");
+	while ((*line)[i] && is_space((*line)[i]))
+		i++;
+	g = parse_int_0_255(*line, &i);
+	if (g < 0)
+		parsing_error(cub, NULL, line, "Wrong value for color");
+	while ((*line)[i] && is_space((*line)[i]))
+		i++;
+	b = parse_int_0_255(*line, &i);
+	if (b < 0)
+		parsing_error(cub, NULL, line, "Wrong value for color");
+	if (r == INT_MIN || g == INT_MIN || b == INT_MIN)
+		parsing_error(cub, NULL, line, "Color values are not complete");
+	*dest = ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
+}
+
+static bool	try_parse_element(char **line, t_cub3D *cub)
 {
 	int	i;
 
 	i = 0;
-	while (line[i] && is_space(line[i]))
+	while (*line[i] && is_space(*line[i]))
 	{
-		if (line[i] == '\n')
+		if (*line[i] == '\n')
 			return (false);
 		i++;
 	}
-	if (!ft_strncmp(line + i, "NO ", 3))
-		return (set_value(line + i + 2, &cub->textures->north_name, cub), true);
-	else if (!ft_strncmp(line + i, "SO ", 3))
-		return (set_value(line + i + 2, &cub->textures->south_name, cub), true);
-	else if (!ft_strncmp(line + i, "WE ", 3))
-		return (set_value(line + i + 2, &cub->textures->west_name, cub), true);
-	else if (!ft_strncmp(line + i, "EA ", 3))
-		return (set_value(line + i + 2, &cub->textures->east_name, cub), true);
-	else if (!ft_strncmp(line + i, "F ", 2))
-		return (/*set_value(line + i + 1, &cub->colors->floor, cub), */true);
-	else if (!ft_strncmp(line + i, "C ", 2))
-		return (/*set_value(line + i + 1, &cub->colors->ceiling, cub), */true);
+	if (!ft_strncmp(*line + i, "NO ", 3))
+		return (parse_texture(line, i + 2, &cub->textures->north_name, cub), true);
+	else if (!ft_strncmp(*line + i, "SO ", 3))
+		return (parse_texture(line, i + 2, &cub->textures->south_name, cub), true);
+	else if (!ft_strncmp(*line + i, "WE ", 3))
+		return (parse_texture(line, i + 2, &cub->textures->west_name, cub), true);
+	else if (!ft_strncmp(*line + i, "EA ", 3))
+		return (parse_texture(line, i + 2, &cub->textures->east_name, cub), true);
+	else if (!ft_strncmp(*line + i, "F ", 2))
+		return (parse_color(line, i + 1, &cub->colors->floor, cub), true);
+	else if (!ft_strncmp(*line + i, "C ", 2))
+		return (parse_color(line, i + 1, &cub->colors->ceiling, cub), true);
 	return (false);
 }
 
@@ -93,33 +176,6 @@ static bool	is_map_line(char *line)
 		i++;
 	}
 	return (true);
-}
-
-static void	parsing_error(t_cub3D *cub, t_list **map_list, char **line, char *message)
-{
-	t_list	*tmp;
-
-	if (map_list && *map_list)
-	{
-		while (*map_list)
-		{
-			tmp = (*map_list)->next;
-			free((*map_list)->content);
-			free((*map_list));
-			*map_list = tmp;
-		}
-	}
-	get_next_line(-1);
-	print_error(message);
-	if (*line)
-	{	
-		ft_putstr_fd("At line `", STDERR_FILENO);
-		ft_putstr_fd(*line, STDERR_FILENO);
-	}
-	close(cub->map->map_fd);
-	free_cub(cub);
-	free(*line);
-	exit(1);
 }
 
 static void	allocate_map(t_cub3D *cub, char **line)
@@ -195,13 +251,13 @@ static void	read_map(t_cub3D *cub)
 			}
 			line = get_next_line(cub->map->map_fd);
 			if (!line)
-				parsing_error(cub, NULL, &line, "GNL returned NULL");
+				parsing_error(cub, NULL, &line, "Invalid map");
 		}
 		if (state == ST_ELEMS)
 		{
 			if (line_is_empty(line))
 				continue;
-			if (try_parse_element(line, cub))
+			if (try_parse_element(&line, cub))
 				continue;
 			if (is_map_line(line))
 			{
@@ -241,6 +297,25 @@ bool	file_is_empty(char *filname)
 	return (close(fd), false);
 }
 
+bool	missing_values(t_cub3D *cub)
+{
+	if (!cub->map->grid)
+		return (print_error("No map allocated"), true);
+	if (cub->colors->ceiling == INT_MIN)
+		return (print_error("No ceiling color"), true);
+	if (cub->colors->floor == INT_MIN)
+		return (print_error("No floor color"), true);
+	if (!cub->textures->east_name)
+		return (print_error("No east texture"), true);
+	if (!cub->textures->west_name)
+		return (print_error("No west texture"), true);
+	if (!cub->textures->north_name)
+		return (print_error("No north texture"), true);
+	if (!cub->textures->south_name)
+		return (print_error("No south texture"), true);
+	return (false);
+}
+
 bool	parse_the_map(char *filename, t_cub3D *cub)
 {
 	if (!ends_with_cub(filename))
@@ -251,5 +326,8 @@ bool	parse_the_map(char *filename, t_cub3D *cub)
 	if (file_is_empty(filename))
 		return (false);
 	read_map(cub);
+	if (missing_values(cub))
+		return (false);
+	// closed map check
 	return (true);
 }
