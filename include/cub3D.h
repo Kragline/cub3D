@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 15:43:26 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:20:10 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,9 @@ bool	file_is_empty(char *filname);
 //			allocate map
 void	allocate_map(t_cub3D *cub, char **line);
 
-//			parsing_utils
+//			parsing utils
 bool	missing_values(t_cub3D *cub);
+void	set_default_values(t_cub3D *cub);
 
 //			element parsing
 bool	try_parse_element(char **line, t_cub3D *cub);

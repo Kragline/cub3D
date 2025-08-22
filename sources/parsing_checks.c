@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:46:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 15:02:19 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:15:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	map_is_closed(t_cub3D *cub)
 		len = ft_strlen(cub->map->grid[i]);
 		if (cub->map->grid[i][0] != '1' || cub->map->grid[i][len - 1] != '1')
 			return (false);
-		i++;		
+		i++;
 	}
 	return (true);
 }

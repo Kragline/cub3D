@@ -6,61 +6,81 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:11:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 15:12:09 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:13:07 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
-void	allocate_map(t_cub3D *cub, char **line)
+static bool	break_the_loop(char **line, t_cub3D *cub)
+{
+	if (*line)
+	{
+		free(*line);
+		*line = NULL;
+	}
+	*line = get_next_line(cub->map->map_fd);
+	if (!is_map_line(*line))
+	{
+		get_next_line(-1);
+		free(*line);
+		*line = NULL;
+		return (true);
+	}
+	return (false);
+}
+
+static void	find_player_spawn(char **line, char *spawn_dir,
+				t_list **map_list, t_cub3D *cub)
+{
+	int	line_spawn_count;
+
+	line_spawn_count = spawn_point_count(*line);
+	if (line_spawn_count > 1 || (line_spawn_count > 0 && *spawn_dir))
+		parsing_error(cub, map_list, line, "Multiple spawn points");
+	else if (line_spawn_count == 1)
+		*spawn_dir = find_spawn_point(*line);
+	ft_lstadd_back(map_list, ft_lstnew(ft_strdup(*line)));
+	(cub->map->line_count)++;
+}
+
+static void	from_list_to_grid(t_list **map_list, t_cub3D *cub)
 {
 	int		i;
-	int		line_spawn_count;
-	char	spawn_dir;
 	t_list	*tmp;
-	t_list	*map_list;
 
 	i = 0;
 	tmp = NULL;
+	cub->map->grid = malloc(sizeof(char *) * (cub->map->line_count + 1));
+	while (*map_list)
+	{
+		cub->map->grid[i] = ft_strtrim((*map_list)->content, "\t\n\v\f ");
+		i++;
+		tmp = (*map_list)->next;
+		free((*map_list)->content);
+		free(*map_list);
+		(*map_list) = tmp;
+	}
+	cub->map->grid[cub->map->line_count] = NULL;
+}
+
+void	allocate_map(t_cub3D *cub, char **line)
+{
+	int		i;
+	char	spawn_dir;
+	t_list	*map_list;
+
+	i = 0;
 	spawn_dir = '\0';
 	map_list = ft_lstnew(ft_strdup(*line));
 	(cub->map->line_count)++;
 	while (*line && is_map_line(*line))
 	{
-		if (*line)
-		{
-			free(*line);
-			*line = NULL;
-		}
-		*line = get_next_line(cub->map->map_fd);
-		if (!is_map_line(*line))
-		{
-			get_next_line(-1);
-			free(*line);
-			line = NULL;
+		if (break_the_loop(line, cub))
 			break ;
-		}
 		if (*line)
-		{
-			line_spawn_count = spawn_point_count(*line);
-			if (line_spawn_count > 1 || (line_spawn_count > 0 && spawn_dir))
-				parsing_error(cub, &map_list, line, "Multiple spawn points");
-			else if (line_spawn_count == 1)
-				spawn_dir = find_spawn_point(*line);
-			ft_lstadd_back(&map_list, ft_lstnew(ft_strdup(*line)));
-			(cub->map->line_count)++;
-		}
+			find_player_spawn(line, &spawn_dir, &map_list, cub);
 	}
 	cub->map->player_dir = spawn_dir;
-	cub->map->grid = malloc(sizeof(char *) * (cub->map->line_count + 1));
-	while (map_list)
-	{
-		cub->map->grid[i] = ft_strtrim(map_list->content, "\t\n\v\f ");
-		i++;
-		tmp = map_list->next;
-		free(map_list->content);
-		free(map_list);
-		map_list = tmp;
-	}
-	cub->map->grid[cub->map->line_count] = NULL;
+	from_list_to_grid(&map_list, cub);
 }

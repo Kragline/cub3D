@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 15:42:56 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:19:30 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,23 @@ bool	missing_values(t_cub3D *cub)
 	if (!cub->textures->so_name)
 		return (print_error("No south texture"), true);
 	return (false);
+}
+
+void	set_default_values(t_cub3D *cub)
+{
+	cub->map->grid = NULL;
+	cub->map->map_fd = -1;
+	cub->map->line_count = 0;
+	cub->colors->ceiling = INT_MIN;
+	cub->colors->floor = INT_MIN;
+	cub->textures->east = NULL;
+	cub->textures->ea_name = NULL;
+	cub->textures->west = NULL;
+	cub->textures->we_name = NULL;
+	cub->textures->north = NULL;
+	cub->textures->no_name = NULL;
+	cub->textures->south = NULL;
+	cub->textures->so_name = NULL;
+	cub->mlx = NULL;
+	cub->mlx_win = NULL;
 }

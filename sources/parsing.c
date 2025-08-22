@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 15:34:10 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:17:07 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	change_the_line(bool change_line, char **line, t_cub3D *cub)
 	}
 }
 
-static bool	st_elems(char **line, bool *change_line, t_state *state, t_cub3D *cub)
+static bool	st_elems(char **line, bool *change_line,
+				t_state *state, t_cub3D *cub)
 {
 	if (line_is_empty(*line))
 		return (true);
@@ -42,7 +43,7 @@ static bool	st_elems(char **line, bool *change_line, t_state *state, t_cub3D *cu
 	return (false);
 }
 
-static void st_map(char **line, bool *change_line, t_state *state, t_cub3D *cub)
+static void	st_map(char **line, bool *change_line, t_state *state, t_cub3D *cub)
 {
 	allocate_map(cub, line);
 	*change_line = true;
@@ -53,7 +54,7 @@ static void	read_map(t_cub3D *cub)
 {
 	bool	change_line;
 	char	*line;
-	t_state state;
+	t_state	state;
 
 	state = ST_ELEMS;
 	line = NULL;

@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 17:11:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 15:42:56 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:22:27 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,8 @@ static void	free_grid(char ***grid)
 	free((*grid));
 }
 
-void	free_cub(t_cub3D *cub)
+static void	free_textures(t_cub3D *cub)
 {
-	if (!cub)
-		return ;
-	if (cub->map->grid)
-		free_grid(&cub->map->grid);
-	// free mlx textures
 	if (cub->textures->ea_name)
 		free(cub->textures->ea_name);
 	if (cub->textures->we_name)
@@ -40,14 +35,23 @@ void	free_cub(t_cub3D *cub)
 		free(cub->textures->no_name);
 	if (cub->textures->so_name)
 		free(cub->textures->so_name);
+	if (cub->textures)
+		free(cub->textures);
+}
+
+void	free_cub(t_cub3D *cub)
+{
+	if (!cub)
+		return ;
+	if (cub->map->grid)
+		free_grid(&cub->map->grid);
+	free_textures(cub);
 	if (cub->map->map_fd != -1)
 		close(cub->map->map_fd);
 	if (cub->colors)
 		free(cub->colors);
 	if (cub->map)
 		free(cub->map);
-	if (cub->textures)
-		free(cub->textures);
 	if (cub->mlx_win)
 		mlx_destroy_window(cub->mlx, cub->mlx_win);
 	if (cub->mlx)
