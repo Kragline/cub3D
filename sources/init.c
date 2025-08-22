@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 13:15:34 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 15:42:56 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	init_window(t_cub3D *cub)
 	if (!cub->mlx_win)
 		free_cub(cub);
 	mlx_hook(cub->mlx_win,
-			KeyPress, KeyPressMask,
-			key_handle, cub);
+		KeyPress, KeyPressMask,
+		key_handle, cub);
 	mlx_hook(cub->mlx_win,
-			ButtonPress, ButtonPressMask,
-			mouse_handle, cub);
+		ButtonPress, ButtonPressMask,
+		mouse_handle, cub);
 	mlx_hook(cub->mlx_win,
-			DestroyNotify, StructureNotifyMask,
-			close_handle, cub);
+		DestroyNotify, StructureNotifyMask,
+		close_handle, cub);
 	mlx_loop(cub->mlx);
 }
 
@@ -79,13 +79,13 @@ t_cub3D	*init_cub(void)
 	cub->colors->ceiling = INT_MIN;
 	cub->colors->floor = INT_MIN;
 	cub->textures->east = NULL;
-	cub->textures->east_name = NULL;
+	cub->textures->ea_name = NULL;
 	cub->textures->west = NULL;
-	cub->textures->west_name = NULL;
+	cub->textures->we_name = NULL;
 	cub->textures->north = NULL;
-	cub->textures->north_name = NULL;
+	cub->textures->no_name = NULL;
 	cub->textures->south = NULL;
-	cub->textures->south_name = NULL;
+	cub->textures->so_name = NULL;
 	cub->mlx = NULL;
 	cub->mlx_win = NULL;
 	return (cub);

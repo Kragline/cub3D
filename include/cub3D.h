@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 13:15:43 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 15:43:26 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ typedef enum e_state
 typedef struct s_textures
 {
 	void	*north;
-	char	*north_name;
+	char	*no_name;
 	void	*south;
-	char	*south_name;
+	char	*so_name;
 	void	*east;
-	char	*east_name;
+	char	*ea_name;
 	void	*west;
-	char	*west_name;
+	char	*we_name;
 }	t_textures;
 
 typedef struct s_colors
@@ -76,15 +76,36 @@ typedef struct s_cub3D
 
 //			utils
 bool	ends_with_cub(char *filename);
-void	print_error(char *message);
-void	print_usage(void);
 bool	is_space(char c);
 bool	is_map_char(char c);
 int		spawn_point_count(char *line);
 char	find_spawn_point(char *line);
 
+//			prints
+void	print_error(char *message);
+void	print_usage(void);
+void	print_values(t_cub3D *cub);
+void	parsing_error(t_cub3D *cub, t_list **map_list,
+			char **line, char *message);
+
 //			parsing
 bool	parse_the_map(char *filename, t_cub3D *cub);
+
+//			parsing checks
+bool	line_is_empty(char *line);
+bool	is_map_line(char *line);
+bool	map_is_closed(t_cub3D *cub);
+bool	is_all_wall(char *line);
+bool	file_is_empty(char *filname);
+
+//			allocate map
+void	allocate_map(t_cub3D *cub, char **line);
+
+//			parsing_utils
+bool	missing_values(t_cub3D *cub);
+
+//			element parsing
+bool	try_parse_element(char **line, t_cub3D *cub);
 
 //			init
 t_cub3D	*init_cub(void);

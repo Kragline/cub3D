@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 17:11:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 00:39:46 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 15:42:56 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ void	free_cub(t_cub3D *cub)
 	if (cub->map->grid)
 		free_grid(&cub->map->grid);
 	// free mlx textures
-	if (cub->textures->east_name)
-		free(cub->textures->east_name);
-	if (cub->textures->west_name)
-		free(cub->textures->west_name);
-	if (cub->textures->north_name)
-		free(cub->textures->north_name);
-	if (cub->textures->south_name)
-		free(cub->textures->south_name);
+	if (cub->textures->ea_name)
+		free(cub->textures->ea_name);
+	if (cub->textures->we_name)
+		free(cub->textures->we_name);
+	if (cub->textures->no_name)
+		free(cub->textures->no_name);
+	if (cub->textures->so_name)
+		free(cub->textures->so_name);
 	if (cub->map->map_fd != -1)
 		close(cub->map->map_fd);
 	if (cub->colors)

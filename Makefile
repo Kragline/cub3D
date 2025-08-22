@@ -17,7 +17,7 @@ HEADER_DIR = include/
 SOURCES_DIR = sources/
 OBJECTS_DIR = objects/
 
-FILENAMES = main utils parsing init free
+FILENAMES = main random_utils parsing init free prints parsing_checks element_parsing allocate_map parsing_utils
 
 SOURCES = $(addsuffix .c, $(addprefix $(SOURCES_DIR), $(FILENAMES)))
 OBJECTS = $(addsuffix .o, $(addprefix $(OBJECTS_DIR), $(FILENAMES)))
