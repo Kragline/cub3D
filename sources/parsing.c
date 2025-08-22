@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 23:59:23 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 14:25:11 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,9 @@ static bool	try_parse_element(char **line, t_cub3D *cub)
 	int	i;
 
 	i = 0;
-	while (*line[i] && is_space(*line[i]))
+	while ((*line)[i] && is_space((*line)[i]))
 	{
-		if (*line[i] == '\n')
+		if ((*line)[i] == '\n')
 			return (false);
 		i++;
 	}
@@ -221,7 +221,7 @@ static void	allocate_map(t_cub3D *cub, char **line)
 	cub->map->grid = malloc(sizeof(char *) * (cub->map->line_count + 1));
 	while (map_list)
 	{
-		cub->map->grid[i] = ft_strdup(map_list->content);
+		cub->map->grid[i] = ft_strtrim(map_list->content, "\t\n\v\f ");
 		i++;
 		tmp = map_list->next;
 		free(map_list->content);
@@ -301,6 +301,11 @@ bool	missing_values(t_cub3D *cub)
 {
 	if (!cub->map->grid)
 		return (print_error("No map allocated"), true);
+	if (cub->map->grid
+		&& cub->colors->ceiling == INT_MIN && cub->colors->floor == INT_MIN
+		&& !cub->textures->east_name && !cub->textures->west_name
+		&& !cub->textures->north_name && !cub->textures->south_name)
+		return (print_error("No texture or color before map"), true);
 	if (cub->colors->ceiling == INT_MIN)
 		return (print_error("No ceiling color"), true);
 	if (cub->colors->floor == INT_MIN)
@@ -316,6 +321,39 @@ bool	missing_values(t_cub3D *cub)
 	return (false);
 }
 
+bool	is_all_wall(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != '1' && line[i] != ' ')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+bool	map_is_closed(t_cub3D *cub)
+{
+	int	i;
+	int	len;
+
+	if (!is_all_wall(cub->map->grid[0])
+		|| !is_all_wall(cub->map->grid[cub->map->line_count - 1]))
+		return (false);
+	i = 0;
+	while (cub->map->grid[i])
+	{
+		len = ft_strlen(cub->map->grid[i]);
+		if (cub->map->grid[i][0] != '1' || cub->map->grid[i][len - 1] != '1')
+			return (false);
+		i++;		
+	}
+	return (true);
+}
+
 bool	parse_the_map(char *filename, t_cub3D *cub)
 {
 	if (!ends_with_cub(filename))
@@ -328,6 +366,8 @@ bool	parse_the_map(char *filename, t_cub3D *cub)
 	read_map(cub);
 	if (missing_values(cub))
 		return (false);
+	if (!map_is_closed(cub))
+		return (print_error("Map is not closed"), false);
 	// closed map check
 	return (true);
 }

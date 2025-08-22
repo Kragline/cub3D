@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:49:40 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/20 23:36:57 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/22 14:00:12 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_values(t_cub3D *cub)
 	i = 0;
 	while (cub->map->grid[i])
 	{
-		ft_printf("%d) %s", i, cub->map->grid[i]);
+		ft_printf("%d) %s\n", i, cub->map->grid[i]);
 		i++;
 	}
 	ft_printf("\n%s\n", cub->textures->east_name);
