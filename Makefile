@@ -12,19 +12,23 @@ PURPLE = \033[1;35m
 WHITE = \033[0m
 
 LIBFT = libft/libft.a
+MINILIBX = minilibx-linux/libmlx_Linux.a
 
 HEADER_DIR = include/
 SOURCES_DIR = sources/
 OBJECTS_DIR = objects/
 
-FILENAMES = main random_utils parsing init free prints parsing_checks element_parsing allocate_map utils
+FILENAMES = main/main cleanup/free init/init init/utils \
+			parsing/additional parsing/allocate_map parsing/element_parsing \
+			parsing/parsing_checks parsing/parsing_utils \
+			parsing/parsing parsing/prints
 
 SOURCES = $(addsuffix .c, $(addprefix $(SOURCES_DIR), $(FILENAMES)))
 OBJECTS = $(addsuffix .o, $(addprefix $(OBJECTS_DIR), $(FILENAMES)))
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJECTS) Makefile
+$(NAME): $(LIBFT) $(MINILIBX) $(OBJECTS) Makefile
 	@echo "$(YELLOW)Compiling $@...$(WHITE)🛠️"
 	@$(CC) $(CCFLAGS) -I$(HEADER_DIR) $(LIBFT) $(OBJECTS) -o $(NAME) $(MLXFLAGS)
 	@echo "$(GREEN)Done!$(WHITE)✅️"
@@ -49,8 +53,13 @@ $(LIBFT):
 	@make bonus -sC libft
 	@echo "$(GREEN)Done!$(WHITE)✔︎"
 
+$(MINILIBX):
+	@echo "$(BLUE)Compiling $@...$(WHITE)🔨"
+	@make -sC minilibx-linux > /dev/null 2> /dev/null
+	@echo "$(GREEN)Done!$(WHITE)✔︎"
+
 $(OBJECTS_DIR)%.o: $(SOURCES_DIR)%.c
-	@mkdir -p $(OBJECTS_DIR)
+	@mkdir -p $(dir $@)
 	@echo "$(BLUE)Compiling $@...$(WHITE)🔧"
 	@$(CC) -c $(CCFLAGS) -I$(HEADER_DIR) -Iminilibx-linux $< -o $@
 
@@ -60,6 +69,9 @@ clean:
 	@echo "$(GREEN)Done!$(WHITE)✔︎"
 	@echo "$(BLUE)Cleaning libft object files...$(WHITE)🚮"
 	@make -sC libft clean
+	@echo "$(GREEN)Done!$(WHITE)✔︎"
+	@echo "$(BLUE)Cleaning minilibx...$(WHITE)🚮"
+	@make -sC minilibx-linux clean > /dev/null 2> /dev/null
 	@echo "$(GREEN)Done!$(WHITE)✔︎"
 
 fclean: clean

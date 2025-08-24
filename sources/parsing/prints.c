@@ -6,11 +6,11 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:34:09 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 15:42:56 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "cub3D.h"
 
 void	print_error(char *message)
 {
@@ -26,7 +26,7 @@ void	print_usage(void)
 	ft_putendl_fd(PURPLE "./cub3D [map.cub]" WHITE, STDERR_FILENO);
 }
 
-void	print_values(t_cub3D *cub)
+void	print_values(t_cub3d *cub)
 {
 	int	i;
 
@@ -45,7 +45,17 @@ void	print_values(t_cub3D *cub)
 	ft_printf("%c\n", cub->map->player_dir);
 }
 
-void	parsing_error(t_cub3D *cub, t_list **map_list,
+static void	print_help_message(char *line, char *filename, int lines_read)
+{
+	ft_putstr_fd("At ", STDERR_FILENO);
+	ft_putstr_fd(filename, STDERR_FILENO);
+	ft_putstr_fd(":", STDERR_FILENO);
+	ft_putnbr_fd(lines_read, STDERR_FILENO);
+	ft_putstr_fd(" `", STDERR_FILENO);
+	ft_putstr_fd(line, STDERR_FILENO);
+}
+
+void	parsing_error(t_cub3d *cub, t_list **map_list,
 			char **line, char *message)
 {
 	t_list	*tmp;
@@ -63,10 +73,7 @@ void	parsing_error(t_cub3D *cub, t_list **map_list,
 	get_next_line(-1);
 	print_error(message);
 	if (*line)
-	{
-		ft_putstr_fd("At line `", STDERR_FILENO);
-		ft_putstr_fd(*line, STDERR_FILENO);
-	}
+		print_help_message(*line, cub->map->filename, cub->map->lines_read);
 	close(cub->map->map_fd);
 	free_cub(cub);
 	if (line && *line)

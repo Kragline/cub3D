@@ -6,15 +6,15 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:49:40 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 16:17:21 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "cub3D.h"
 
 int	main(int argc, char **argv)
 {
-	t_cub3D		*cub;
+	t_cub3d		*cub;
 
 	if (argc != 2)
 		return (print_usage(), 1);

@@ -6,13 +6,13 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:03:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 15:42:56 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "cub3D.h"
 
-static void	parse_texture(char **line, int index, char **dest, t_cub3D *cub)
+static void	parse_texture(char **line, int index, char **dest, t_cub3d *cub)
 {
 	int	i;
 	int	start_index;
@@ -55,7 +55,7 @@ static int	parse_int_0_255(char *line, int *i)
 	return ((int)value);
 }
 
-static void	get_color(char **line, int *i, int *col, t_cub3D *cub)
+static void	get_color(char **line, int *i, int *col, t_cub3d *cub)
 {
 	while ((*line)[*i] && is_space((*line)[*i]))
 		(*i)++;
@@ -64,7 +64,7 @@ static void	get_color(char **line, int *i, int *col, t_cub3D *cub)
 		parsing_error(cub, NULL, line, "Wrong value for color");
 }
 
-static void	parse_color(char **line, int index, int *dest, t_cub3D *cub)
+static void	parse_color(char **line, int index, int *dest, t_cub3d *cub)
 {
 	int	i;
 	int	r;
@@ -85,7 +85,7 @@ static void	parse_color(char **line, int index, int *dest, t_cub3D *cub)
 	*dest = ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
 }
 
-bool	try_parse_element(char **line, t_cub3D *cub)
+bool	try_parse_element(char **line, t_cub3d *cub)
 {
 	int	i;
 

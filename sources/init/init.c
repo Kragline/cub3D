@@ -6,19 +6,19 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 16:19:05 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static int	close_handle(t_cub3D *cub)
+static int	close_handle(t_cub3d *cub)
 {
 	free_cub(cub);
 	exit(1);
 }
 
-static int	mouse_handle(int button, int x, int y, t_cub3D *cub)
+static int	mouse_handle(int button, int x, int y, t_cub3d *cub)
 {
 	(void)button;
 	(void)x;
@@ -27,7 +27,7 @@ static int	mouse_handle(int button, int x, int y, t_cub3D *cub)
 	return (0);
 }
 
-static int	key_handle(int keysym, t_cub3D *cub)
+static int	key_handle(int keysym, t_cub3d *cub)
 {
 	if (keysym == XK_Escape)
 	{
@@ -37,7 +37,7 @@ static int	key_handle(int keysym, t_cub3D *cub)
 	return (0);
 }
 
-void	init_window(t_cub3D *cub)
+void	init_window(t_cub3d *cub)
 {
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
@@ -57,11 +57,11 @@ void	init_window(t_cub3D *cub)
 	mlx_loop(cub->mlx);
 }
 
-t_cub3D	*init_cub(void)
+t_cub3d	*init_cub(void)
 {
-	t_cub3D	*cub;
+	t_cub3d	*cub;
 
-	cub = malloc(sizeof(t_cub3D));
+	cub = malloc(sizeof(t_cub3d));
 	if (!cub)
 		return (NULL);
 	cub->colors = malloc(sizeof(t_colors));

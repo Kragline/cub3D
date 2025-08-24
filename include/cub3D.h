@@ -6,20 +6,18 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 16:20:10 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <X11/Xlib.h>
-# include <X11/Xlib.h>
-# include <X11/keysym.h>
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
-# include <stdbool.h>
-# include <limits.h>
+# include "init.h"
+# include "parsing.h"
+# include "cleanup.h"
 
 # define RED "\033[1;31m"
 # define WHITE "\033[0m"
@@ -61,58 +59,19 @@ typedef struct s_map
 	int		player_x;
 	int		player_y;
 	int		line_count;
+	int		lines_read;
 	int		map_fd;
 	char	**grid;
+	char	*filename;
 }	t_map;
 
-typedef struct s_cub3D
+typedef struct s_cub3d
 {
 	t_textures	*textures;
 	t_colors	*colors;
 	t_map		*map;
 	void		*mlx;
 	void		*mlx_win;
-}	t_cub3D;
-
-//			utils
-bool	ends_with_cub(char *filename);
-bool	is_space(char c);
-bool	is_map_char(char c);
-int		spawn_point_count(char *line);
-char	find_spawn_point(char *line);
-
-//			prints
-void	print_error(char *message);
-void	print_usage(void);
-void	print_values(t_cub3D *cub);
-void	parsing_error(t_cub3D *cub, t_list **map_list,
-			char **line, char *message);
-
-//			parsing
-bool	parse_the_map(char *filename, t_cub3D *cub);
-
-//			parsing checks
-bool	line_is_empty(char *line);
-bool	is_map_line(char *line);
-bool	map_is_closed(t_cub3D *cub);
-bool	is_all_wall(char *line);
-bool	file_is_empty(char *filname);
-
-//			allocate map
-void	allocate_map(t_cub3D *cub, char **line);
-
-//			parsing utils
-bool	missing_values(t_cub3D *cub);
-void	set_default_values(t_cub3D *cub);
-
-//			element parsing
-bool	try_parse_element(char **line, t_cub3D *cub);
-
-//			init
-t_cub3D	*init_cub(void);
-void	init_window(t_cub3D *cub);
-
-//			free
-void	free_cub(t_cub3D *cub);
+}	t_cub3d;
 
 #endif

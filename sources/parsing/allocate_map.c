@@ -6,13 +6,13 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:11:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 16:13:07 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "cub3D.h"
 
-static bool	break_the_loop(char **line, t_cub3D *cub)
+static bool	break_the_loop(char **line, t_cub3d *cub)
 {
 	if (*line)
 	{
@@ -20,6 +20,7 @@ static bool	break_the_loop(char **line, t_cub3D *cub)
 		*line = NULL;
 	}
 	*line = get_next_line(cub->map->map_fd);
+	cub->map->lines_read++;
 	if (!is_map_line(*line))
 	{
 		get_next_line(-1);
@@ -31,7 +32,7 @@ static bool	break_the_loop(char **line, t_cub3D *cub)
 }
 
 static void	find_player_spawn(char **line, char *spawn_dir,
-				t_list **map_list, t_cub3D *cub)
+				t_list **map_list, t_cub3d *cub)
 {
 	int	line_spawn_count;
 
@@ -44,7 +45,7 @@ static void	find_player_spawn(char **line, char *spawn_dir,
 	(cub->map->line_count)++;
 }
 
-static void	from_list_to_grid(t_list **map_list, t_cub3D *cub)
+static void	from_list_to_grid(t_list **map_list, t_cub3d *cub)
 {
 	int		i;
 	t_list	*tmp;
@@ -64,13 +65,11 @@ static void	from_list_to_grid(t_list **map_list, t_cub3D *cub)
 	cub->map->grid[cub->map->line_count] = NULL;
 }
 
-void	allocate_map(t_cub3D *cub, char **line)
+void	allocate_map(t_cub3d *cub, char **line)
 {
-	int		i;
 	char	spawn_dir;
 	t_list	*map_list;
 
-	i = 0;
 	spawn_dir = '\0';
 	map_list = ft_lstnew(ft_strdup(*line));
 	(cub->map->line_count)++;

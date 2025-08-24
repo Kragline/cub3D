@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   random_utils.c                                     :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:05:01 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 15:14:18 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:23:44 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,4 @@ int	spawn_point_count(char *line)
 		i++;
 	}
 	return (count);
-}
-
-bool	ends_with_cub(char *filename)
-{
-	size_t	len;
-
-	len = ft_strlen(filename);
-	if (len < 4)
-		return (0);
-	return (ft_strncmp(filename + len - 4, ".cub", 4) == 0);
 }

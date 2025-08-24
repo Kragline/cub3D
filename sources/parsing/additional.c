@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   additional.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 16:19:30 by armarake         ###   ########.fr       */
+/*   Created: 2025/08/24 13:10:55 by armarake          #+#    #+#             */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "cub3D.h"
 
-bool	missing_values(t_cub3D *cub)
+bool	missing_values(t_cub3d *cub)
 {
 	if (!cub->map->grid)
 		return (print_error("No map allocated"), true);
@@ -36,21 +36,12 @@ bool	missing_values(t_cub3D *cub)
 	return (false);
 }
 
-void	set_default_values(t_cub3D *cub)
+bool	ends_with_cub(char *filename)
 {
-	cub->map->grid = NULL;
-	cub->map->map_fd = -1;
-	cub->map->line_count = 0;
-	cub->colors->ceiling = INT_MIN;
-	cub->colors->floor = INT_MIN;
-	cub->textures->east = NULL;
-	cub->textures->ea_name = NULL;
-	cub->textures->west = NULL;
-	cub->textures->we_name = NULL;
-	cub->textures->north = NULL;
-	cub->textures->no_name = NULL;
-	cub->textures->south = NULL;
-	cub->textures->so_name = NULL;
-	cub->mlx = NULL;
-	cub->mlx_win = NULL;
+	size_t	len;
+
+	len = ft_strlen(filename);
+	if (len < 4)
+		return (0);
+	return (ft_strncmp(filename + len - 4, ".cub", 4) == 0);
 }

@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 17:11:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 16:22:27 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	free_grid(char ***grid)
 	free((*grid));
 }
 
-static void	free_textures(t_cub3D *cub)
+static void	free_textures(t_cub3d *cub)
 {
 	if (cub->textures->ea_name)
 		free(cub->textures->ea_name);
@@ -39,7 +39,7 @@ static void	free_textures(t_cub3D *cub)
 		free(cub->textures);
 }
 
-void	free_cub(t_cub3D *cub)
+void	free_cub(t_cub3d *cub)
 {
 	if (!cub)
 		return ;

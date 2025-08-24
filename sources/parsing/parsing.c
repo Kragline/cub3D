@@ -6,13 +6,13 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 16:17:07 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	change_the_line(bool change_line, char **line, t_cub3D *cub)
+static void	change_the_line(bool change_line, char **line, t_cub3d *cub)
 {
 	if (change_line)
 	{
@@ -22,13 +22,14 @@ static void	change_the_line(bool change_line, char **line, t_cub3D *cub)
 			*line = NULL;
 		}
 		*line = get_next_line(cub->map->map_fd);
+		cub->map->lines_read++;
 		if (!*line)
-			parsing_error(cub, NULL, line, "Invalid map");
+			parsing_error(cub, NULL, line, "Invalid file");
 	}
 }
 
 static bool	st_elems(char **line, bool *change_line,
-				t_state *state, t_cub3D *cub)
+				t_state *state, t_cub3d *cub)
 {
 	if (line_is_empty(*line))
 		return (true);
@@ -43,14 +44,14 @@ static bool	st_elems(char **line, bool *change_line,
 	return (false);
 }
 
-static void	st_map(char **line, bool *change_line, t_state *state, t_cub3D *cub)
+static void	st_map(char **line, bool *change_line, t_state *state, t_cub3d *cub)
 {
 	allocate_map(cub, line);
 	*change_line = true;
 	*state = ST_DONE;
 }
 
-static void	read_map(t_cub3D *cub)
+static void	read_map(t_cub3d *cub)
 {
 	bool	change_line;
 	char	*line;
@@ -79,11 +80,12 @@ static void	read_map(t_cub3D *cub)
 	get_next_line(-1);
 }
 
-bool	parse_the_map(char *filename, t_cub3D *cub)
+bool	parse_the_map(char *filename, t_cub3d *cub)
 {
 	if (!ends_with_cub(filename))
 		return (print_error("Map name must end with .cub"), false);
 	cub->map->map_fd = open(filename, O_RDONLY);
+	cub->map->filename = filename;
 	if (cub->map->map_fd == -1)
 		return (print_error("Can't open the map"), false);
 	if (file_is_empty(filename))

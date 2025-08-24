@@ -6,11 +6,11 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:46:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/22 16:15:16 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "cub3D.h"
 
 bool	line_is_empty(char *line)
 {
@@ -48,7 +48,7 @@ bool	is_map_line(char *line)
 	return (true);
 }
 
-bool	map_is_closed(t_cub3D *cub)
+bool	map_is_closed(t_cub3d *cub)
 {
 	int	i;
 	int	len;
