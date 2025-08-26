@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:04:28 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ typedef struct s_map
 	char	player_dir;
 	int		player_x;
 	int		player_y;
-	int		line_count;
+	int		cols;
+	int		rows;
 	int		lines_read;
 	int		map_fd;
 	char	**grid;

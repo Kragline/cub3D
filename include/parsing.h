@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:20:12 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:08:54 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	try_parse_element(char **line, t_cub3d *cub);
 //			parsing checks
 bool	line_is_empty(char *line);
 bool	is_map_line(char *line);
-bool	map_is_closed(t_cub3d *cub);
+// bool	map_is_closed(t_cub3d *cub);
 bool	is_all_wall(char *line);
 bool	file_is_empty(char *filname);
 
@@ -47,7 +47,7 @@ char	find_spawn_point(char *line);
 //			additional
 bool	missing_values(t_cub3d *cub);
 bool	ends_with_cub(char *filename);
-
+int		safe_strlen(char *str);
 //			prints
 void	print_error(char *message);
 void	print_usage(void);

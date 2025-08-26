@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:11:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 15:16:22 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static bool	break_the_loop(char **line, t_cub3d *cub)
 static void	find_player_spawn(char **line, char *spawn_dir,
 				t_list **map_list, t_cub3d *cub)
 {
+	int	len;
 	int	line_spawn_count;
 
 	line_spawn_count = spawn_point_count(*line);
@@ -41,8 +42,45 @@ static void	find_player_spawn(char **line, char *spawn_dir,
 		parsing_error(cub, map_list, line, "Multiple spawn points");
 	else if (line_spawn_count == 1)
 		*spawn_dir = find_spawn_point(*line);
+	len = safe_strlen(*line);
+	if ((*line)[len - 1] == '\n')
+	{
+		(*line)[len - 1] = '\0';
+		len--;
+	}
+	if (len > cub->map->cols)
+		cub->map->cols = len;
 	ft_lstadd_back(map_list, ft_lstnew(ft_strdup(*line)));
-	(cub->map->line_count)++;
+	(cub->map->rows)++;
+}
+
+char	*normalized_line(char *line, int max_width)
+{
+	int		i;
+	char	*new;
+
+	i = 0;
+	new = malloc(max_width + 1);
+	while (line[i] && line[i] == ' ')
+	{
+		new[i] = '-';
+		i++;
+	}
+	while (line[i])
+	{
+		if (line[i] == ' ')
+			new[i] = '0';
+		else
+			new[i] = line[i];
+		i++;
+	}
+	while (i < max_width)
+	{
+		new[i] = '-';
+		i++;
+	}
+	new[max_width] = '\0';
+	return (new);
 }
 
 static void	from_list_to_grid(t_list **map_list, t_cub3d *cub)
@@ -52,17 +90,17 @@ static void	from_list_to_grid(t_list **map_list, t_cub3d *cub)
 
 	i = 0;
 	tmp = NULL;
-	cub->map->grid = malloc(sizeof(char *) * (cub->map->line_count + 1));
+	cub->map->grid = malloc(sizeof(char *) * (cub->map->rows + 1));
 	while (*map_list)
 	{
-		cub->map->grid[i] = ft_strtrim((*map_list)->content, "\t\n\v\f ");
+		cub->map->grid[i] = normalized_line((*map_list)->content, cub->map->cols);
 		i++;
 		tmp = (*map_list)->next;
 		free((*map_list)->content);
 		free(*map_list);
 		(*map_list) = tmp;
 	}
-	cub->map->grid[cub->map->line_count] = NULL;
+	cub->map->grid[cub->map->rows] = NULL;
 }
 
 void	allocate_map(t_cub3d *cub, char **line)
@@ -71,8 +109,14 @@ void	allocate_map(t_cub3d *cub, char **line)
 	t_list	*map_list;
 
 	spawn_dir = '\0';
+	cub->map->cols = safe_strlen(*line);
+	if ((*line)[cub->map->cols - 1] == '\n')
+	{
+		(*line)[cub->map->cols - 1] = '\0';
+		(cub->map->cols)--;
+	}
 	map_list = ft_lstnew(ft_strdup(*line));
-	(cub->map->line_count)++;
+	(cub->map->rows)++;
 	while (*line && is_map_line(*line))
 	{
 		if (break_the_loop(line, cub))

@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:27:02 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,73 @@ static void	read_map(t_cub3d *cub)
 		}
 	}
 	get_next_line(-1);
+}
+
+static bool	is_walkable(char c)
+{
+    return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+static bool	dfs(char **grid, int x, int y, int rows, int cols)
+{
+    if (x < 0 || y < 0 || x >= rows || y >= cols)
+        return (false);
+    if (grid[x][y] == '-' || grid[x][y] == '1')
+        return (true);
+    if (!is_walkable(grid[x][y]))
+        return (true);
+    grid[x][y] = 'V';
+    bool up    = dfs(grid, x - 1, y, rows, cols);
+    bool down  = dfs(grid, x + 1, y, rows, cols);
+    bool left  = dfs(grid, x, y - 1, rows, cols);
+    bool right = dfs(grid, x, y + 1, rows, cols);
+    return (up && down && left && right);
+}
+
+char	**dup_grid(int rows, char **grid)
+{
+    char **copy = malloc(sizeof(char *) * (rows + 1));
+    for (int i = 0; i < rows; i++)
+        copy[i] = ft_strdup(grid[i]);
+    copy[rows] = NULL;
+    return copy;
+}
+
+static void	find_start_pos(t_cub3d *cub)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < cub->map->rows)
+	{
+		j = 0;
+		while (j < cub->map->cols)
+		{
+			if (cub->map->grid[i][j] == 'N' || cub->map->grid[i][j] == 'S' || cub->map->grid[i][j] == 'E' || cub->map->grid[i][j] == 'W')
+			{
+				cub->map->player_x = i;
+				cub->map->player_y = j;
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+bool map_is_closed(t_cub3d *cub)
+{
+	char **grid = dup_grid(cub->map->rows, cub->map->grid);
+	find_start_pos(cub);
+	if (cub->map->player_x == -1 || cub->map->player_y == -1)
+	{
+		free_grid(&grid);
+		parsing_error(cub, NULL, NULL, "No player position inted map");
+	}
+	bool val = dfs(grid, cub->map->player_x, cub->map->player_y, cub->map->rows, cub->map->cols);
+	free_grid(&grid);
+    return (val);
 }
 
 bool	parse_the_map(char *filename, t_cub3d *cub)

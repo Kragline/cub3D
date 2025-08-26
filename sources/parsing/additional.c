@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:10:55 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 13:54:42 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,16 @@ bool	ends_with_cub(char *filename)
 	if (len < 4)
 		return (0);
 	return (ft_strncmp(filename + len - 4, ".cub", 4) == 0);
+}
+
+int	safe_strlen(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }

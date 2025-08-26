@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:22:53 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	set_default_values(t_cub3d *cub)
 {
-	cub->map->lines_read = 0;
+	cub->map->rows = 0;
 	cub->map->grid = NULL;
 	cub->map->map_fd = -1;
-	cub->map->line_count = 0;
+	cub->map->player_x = -1;
+	cub->map->player_y = -1;
+	cub->map->lines_read = 0;
 	cub->colors->ceiling = INT_MIN;
 	cub->colors->floor = INT_MIN;
 	cub->textures->east = NULL;
