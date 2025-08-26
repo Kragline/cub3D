@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:05:01 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 21:01:35 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 21:39:48 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	is_space(char c)
 bool	is_map_char(char c)
 {
 	if (c == '0' || c == '1' || c == 'N'
-		|| c == 'S' || c == 'E' || c == 'W')
+		|| c == 'S' || c == 'E' || c == 'W' || c == ' ')
 		return (true);
 	return (false);
 }

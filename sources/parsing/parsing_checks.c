@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:46:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 21:07:53 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 21:17:36 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	is_map_line(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (!is_map_char(line[i]) && !is_space(line[i]))
+		if (!is_map_char(line[i]) && line[i] != '\n')
 			return (false);
 		i++;
 	}

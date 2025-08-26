@@ -6,32 +6,40 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:11:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 20:03:00 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 21:39:41 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static bool	break_the_loop(char **line, t_cub3d *cub)
+static bool	break_the_loop(char **line, t_list **map_list, t_cub3d *cub)
 {
+	char	*new_line;
+
 	if (*line)
 	{
 		free(*line);
 		*line = NULL;
 	}
+	new_line = NULL;
 	*line = get_next_line(cub->map->map_fd);
 	cub->map->lines_read++;
 	if (!is_map_line(*line))
 	{
-		get_next_line(-1);
-		free(*line);
-		*line = NULL;
-		return (true);
+		new_line = get_next_line(cub->map->map_fd);
+		if (new_line && is_map_line(new_line))
+		{
+			free(new_line);
+			parsing_error(cub, map_list, line, "Invalid line or char in map");
+		}
+		if (new_line)
+			free(new_line);
+		return (free(*line), true);
 	}
 	return (false);
 }
 
-static void	find_player_spawn(char **line, char *spawn_dir,
+static void	line_to_list(char **line, char *spawn_dir,
 				t_list **map_list, t_cub3d *cub)
 {
 	int	len;
@@ -118,10 +126,10 @@ void	allocate_map(t_cub3d *cub, char **line)
 	(cub->map->rows)++;
 	while (*line && is_map_line(*line))
 	{
-		if (break_the_loop(line, cub))
+		if (break_the_loop(line, &map_list, cub))
 			break ;
 		if (*line)
-			find_player_spawn(line, &spawn_dir, &map_list, cub);
+			line_to_list(line, &spawn_dir, &map_list, cub);
 	}
 	cub->map->player_dir = spawn_dir;
 	from_list_to_grid(&map_list, cub);
