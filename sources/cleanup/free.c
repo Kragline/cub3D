@@ -6,13 +6,13 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 17:11:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 16:10:25 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:25:33 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	free_grid(char ***grid)
+void	free_grid(int ***grid)
 {
 	int	i;
 

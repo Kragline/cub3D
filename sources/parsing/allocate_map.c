@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:11:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 15:16:22 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:20:12 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,31 @@ static void	find_player_spawn(char **line, char *spawn_dir,
 	(cub->map->rows)++;
 }
 
-char	*normalized_line(char *line, int max_width)
+int	*normalized_line(char *line, int max_width)
 {
 	int		i;
-	char	*new;
+	int	*new;
 
 	i = 0;
-	new = malloc(max_width + 1);
+	new = malloc(sizeof(int) * max_width);
 	while (line[i] && line[i] == ' ')
 	{
-		new[i] = '-';
+		new[i] = -1;
 		i++;
 	}
 	while (line[i])
 	{
 		if (line[i] == ' ')
-			new[i] = '0';
+			new[i] = 0;
 		else
-			new[i] = line[i];
+			new[i] = line[i] - '0';
 		i++;
 	}
 	while (i < max_width)
 	{
-		new[i] = '-';
+		new[i] = -1;
 		i++;
 	}
-	new[max_width] = '\0';
 	return (new);
 }
 
@@ -90,7 +89,7 @@ static void	from_list_to_grid(t_list **map_list, t_cub3d *cub)
 
 	i = 0;
 	tmp = NULL;
-	cub->map->grid = malloc(sizeof(char *) * (cub->map->rows + 1));
+	cub->map->grid = malloc(sizeof(int *) * (cub->map->rows + 1));
 	while (*map_list)
 	{
 		cub->map->grid[i] = normalized_line((*map_list)->content, cub->map->cols);

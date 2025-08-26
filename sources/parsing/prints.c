@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:34:09 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 16:25:14 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:19:24 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,18 @@ void	print_usage(void)
 void	print_values(t_cub3d *cub)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (cub->map->grid[i])
+	while (i < cub->map->rows)
 	{
-		ft_printf("%s\n", cub->map->grid[i]);
+		j = 0;
+		while (j < cub->map->cols)
+		{
+			ft_printf("%d", cub->map->grid[i][j]);
+			j++;
+		}
+		ft_printf("\n");
 		i++;
 	}
 	ft_printf("%d\n", cub->map->cols);

@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 15:04:28 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:06:48 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_map
 	int		rows;
 	int		lines_read;
 	int		map_fd;
-	char	**grid;
+	int		**grid;
 	char	*filename;
 }	t_map;
 

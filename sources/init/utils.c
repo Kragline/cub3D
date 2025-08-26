@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 16:22:53 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:17:14 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	set_default_values(t_cub3d *cub)
 	cub->map->rows = 0;
 	cub->map->grid = NULL;
 	cub->map->map_fd = -1;
-	cub->map->player_x = -1;
-	cub->map->player_y = -1;
+	cub->map->player_x = INT_MIN;
+	cub->map->player_y = INT_MIN;
 	cub->map->lines_read = 0;
 	cub->colors->ceiling = INT_MIN;
 	cub->colors->floor = INT_MIN;
