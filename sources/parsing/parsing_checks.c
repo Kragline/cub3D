@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:46:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 16:09:02 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 21:07:53 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,6 @@ bool	is_map_line(char *line)
 	}
 	return (true);
 }
-
-// bool	map_is_closed(t_cub3d *cub)
-// {
-// 	int	i;
-// 	int	len;
-
-// 	if (!is_all_wall(cub->map->grid[0])
-// 		|| !is_all_wall(cub->map->grid[cub->map->rows - 1]))
-// 		return (false);
-// 	i = 0;
-// 	while (cub->map->grid[i])
-// 	{
-// 		len = ft_strlen(cub->map->grid[i]);
-// 		if (cub->map->grid[i][0] != '1' || cub->map->grid[i][len - 1] != '1')
-// 			return (false);
-// 		i++;
-// 	}
-// 	return (true);
-// }
 
 bool	is_all_wall(char *line)
 {

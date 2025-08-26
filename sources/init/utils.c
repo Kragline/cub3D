@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 17:17:14 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 20:34:24 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	set_default_values(t_cub3d *cub)
 	cub->textures->so_name = NULL;
 	cub->mlx = NULL;
 	cub->mlx_win = NULL;
+	cub->img->img_ptr = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 17:38:29 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/08/26 20:22:12 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_cub3d
 	t_textures	*textures;
 	t_colors	*colors;
 	t_map		*map;
-	t_img		img;
+	t_img		*img;
 	void		*mlx;
 	void		*mlx_win;
 }	t_cub3d;

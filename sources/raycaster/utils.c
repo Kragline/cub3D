@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nasargsy <nasargsy@student.42yerevan.am>   +#+  +:+       +#+        */
+/*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:36:33 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/08/26 15:38:53 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/08/26 20:24:48 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	rect(t_img img, int *coords, int tile, int color)
+void	rect(t_img *img, int *coords, int tile, int color)
 {
 	int	i;
 	int	j;
@@ -23,7 +23,7 @@ void	rect(t_img img, int *coords, int tile, int color)
 		j = 0;
 		while (j < tile)
 		{
-			put_pixel(&img, coords[0] + j, coords[1] + i, color);
+			put_pixel(img, coords[0] + j, coords[1] + i, color);
 			j++;
 		}
 		i++;

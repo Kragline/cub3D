@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:11:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 17:20:12 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 20:03:00 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ static void	find_player_spawn(char **line, char *spawn_dir,
 	(cub->map->rows)++;
 }
 
-int	*normalized_line(char *line, int max_width)
+static int	*to_int_arr(char *line, int max_width)
 {
-	int		i;
+	int	i;
 	int	*new;
 
 	i = 0;
@@ -92,7 +92,7 @@ static void	from_list_to_grid(t_list **map_list, t_cub3d *cub)
 	cub->map->grid = malloc(sizeof(int *) * (cub->map->rows + 1));
 	while (*map_list)
 	{
-		cub->map->grid[i] = normalized_line((*map_list)->content, cub->map->cols);
+		cub->map->grid[i] = to_int_arr((*map_list)->content, cub->map->cols);
 		i++;
 		tmp = (*map_list)->next;
 		free((*map_list)->content);
