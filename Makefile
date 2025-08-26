@@ -21,7 +21,8 @@ OBJECTS_DIR = objects/
 FILENAMES = main/main cleanup/free init/init init/utils \
 			parsing/additional parsing/allocate_map parsing/element_parsing \
 			parsing/parsing_checks parsing/parsing_utils \
-			parsing/parsing parsing/prints
+			parsing/parsing parsing/prints \
+			raycaster/mini_map raycaster/utils
 
 SOURCES = $(addsuffix .c, $(addprefix $(SOURCES_DIR), $(FILENAMES)))
 OBJECTS = $(addsuffix .o, $(addprefix $(OBJECTS_DIR), $(FILENAMES)))

@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 17:06:48 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:38:29 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "init.h"
 # include "parsing.h"
 # include "cleanup.h"
+# include "raycaster.h"
 
 # define RED "\033[1;31m"
 # define WHITE "\033[0m"
@@ -66,11 +67,21 @@ typedef struct s_map
 	char	*filename;
 }	t_map;
 
+typedef struct s_img
+{
+	void	*img_ptr;
+	char	*pixels_ptr;
+	int		bpp;
+	int		length;
+	int		endian;
+}	t_img;
+
 typedef struct s_cub3d
 {
 	t_textures	*textures;
 	t_colors	*colors;
 	t_map		*map;
+	t_img		img;
 	void		*mlx;
 	void		*mlx_win;
 }	t_cub3d;

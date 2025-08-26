@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/24 13:52:16 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/26 17:45:15 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,17 @@ void	init_window(t_cub3d *cub)
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 		free_cub(cub);
-	cub->mlx_win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "cub3D");
+	cub->mlx_win = mlx_new_window(cub->mlx, cub->map->cols * 64, cub->map->rows * 64, "cub3D");
 	if (!cub->mlx_win)
 		free_cub(cub);
+	cub->img.img_ptr = mlx_new_image(cub->mlx, cub->map->cols * 64, cub->map->rows * 64);
+	if (!cub->img.img_ptr)
+		free_cub(cub);
+	cub->img.pixels_ptr = mlx_get_data_addr(cub->img.img_ptr,
+				&cub->img.bpp,
+				&cub->img.length,
+				&cub->img.endian);
+	render_mini_map(cub);
 	mlx_hook(cub->mlx_win,
 		KeyPress, KeyPressMask,
 		key_handle, cub);
