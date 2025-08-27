@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:43:32 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/08/26 20:24:31 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/27 14:40:50 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,9 @@
 # include <math.h>
 
 # define TILE 64
-# define ROWS 8
-# define COLS 8
 
-# define MAP_WIDTH COLS * TILE
-# define MAP_HEIGHT ROWS * TILE
-
-typedef struct s_cub3d		t_cub3d;
-typedef struct s_img			t_img;
+typedef struct s_cub3d	t_cub3d;
+typedef struct s_img	t_img;
 
 void	render_mini_map(t_cub3d *cub);
 void	rect(t_img *img, int *coords, int tile, int color);

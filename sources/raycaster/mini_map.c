@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:28:43 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/08/26 20:24:07 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/27 14:38:12 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	render_mini_map(t_cub3d *cub)
 	int		j;
 	int		tile_coords[2];
 	int		color;
-	int		**map = cub->map->grid;
+	int		**map;
+
+	map = cub->map->grid;
 	i = 0;
 	while (i < cub->map->rows)
 	{
