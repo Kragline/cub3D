@@ -6,37 +6,16 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:59:10 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 20:38:59 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/29 16:02:30 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static bool	is_walkable(int c)
+static bool	is_spawn(int c)
 {
-	return (c == 0 || c == ('N' - '0') || c == ('S' - '0')
+	return (c == ('N' - '0') || c == ('S' - '0')
 		|| c == ('E' - '0') || c == ('W' - '0'));
-}
-
-static bool	dfs(int **grid, int x, int y, t_cub3d *cub)
-{
-	bool	up;
-	bool	down;
-	bool	left;
-	bool	right;
-
-	if (x < 0 || y < 0 || x >= cub->map->rows || y >= cub->map->cols)
-		return (false);
-	if (grid[x][y] == -1 || grid[x][y] == 1)
-		return (true);
-	if (!is_walkable(grid[x][y]))
-		return (true);
-	grid[x][y] = 'V';
-	up = dfs(grid, x - 1, y, cub);
-	down = dfs(grid, x + 1, y, cub);
-	left = dfs(grid, x, y - 1, cub);
-	right = dfs(grid, x, y + 1, cub);
-	return (up && down && left && right);
 }
 
 static int	**dup_grid(int rows, int cols, int **grid)
@@ -62,45 +41,44 @@ static int	**dup_grid(int rows, int cols, int **grid)
 	return (copy);
 }
 
-static void	find_start_pos(t_cub3d *cub)
+static bool	dfs_outside(int **grid, int x, int y, t_cub3d *cub)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < cub->map->rows)
-	{
-		j = 0;
-		while (j < cub->map->cols)
-		{
-			if (cub->map->grid[i][j] == ('N' - '0')
-			|| cub->map->grid[i][j] == ('S' - '0')
-			|| cub->map->grid[i][j] == ('E' - '0')
-			|| cub->map->grid[i][j] == ('W' - '0'))
-			{
-				cub->map->player_x = i;
-				cub->map->player_y = j;
-				return ;
-			}
-			j++;
-		}
-		i++;
-	}
+	if (x < 0 || y < 0 || x >= cub->map->rows || y >= cub->map->cols)
+		return (true);
+	if (grid[x][y] == -2)
+		return (true);
+	if (grid[x][y] == 1)
+		return (true);
+	if (grid[x][y] == 0 || is_spawn(grid[x][y]))
+		return (false);
+	if (grid[x][y] != -1)
+		return (true);
+	grid[x][y] = -2;
+	return (dfs_outside(grid, x - 1, y, cub)
+		&& dfs_outside(grid, x + 1, y, cub)
+		&& dfs_outside(grid, x, y - 1, cub)
+		&& dfs_outside(grid, x, y + 1, cub));
 }
 
 bool	map_is_closed(t_cub3d *cub)
 {
+	int		i;
 	int		**grid;
 	bool	is_closed;
 
+	i = -1;
+	is_closed = true;
 	grid = dup_grid(cub->map->rows, cub->map->cols, cub->map->grid);
-	find_start_pos(cub);
-	if (cub->map->player_x == INT_MIN || cub->map->player_y == INT_MIN)
-	{
-		free_grid(&grid);
-		parsing_error(cub, NULL, NULL, "No player position in the map");
-	}
-	is_closed = dfs(grid, cub->map->player_x, cub->map->player_y, cub);
-	free_grid(&grid);
-	return (is_closed);
+	if (!grid)
+		parsing_error(cub, NULL, NULL, "Failed to allocate map for dfs");
+	while (++i < cub->map->cols)
+		if (!dfs_outside(grid, 0, i, cub)
+			|| !dfs_outside(grid, cub->map->rows - 1, i, cub))
+			return (free_grid(&grid), false);
+	i = -1;
+	while (++i < cub->map->rows)
+		if (!dfs_outside(grid, i, 0, cub)
+			|| !dfs_outside(grid, i, cub->map->cols - 1, cub))
+			return (free_grid(&grid), false);
+	return (free_grid(&grid), true);
 }

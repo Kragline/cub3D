@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:10:55 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 13:54:42 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/29 16:00:46 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,32 @@ bool	missing_values(t_cub3d *cub)
 	if (!cub->textures->so_name)
 		return (print_error("No south texture"), true);
 	return (false);
+}
+
+void	find_start_pos(t_cub3d *cub)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < cub->map->rows)
+	{
+		j = 0;
+		while (j < cub->map->cols)
+		{
+			if (cub->map->grid[i][j] == ('N' - '0')
+			|| cub->map->grid[i][j] == ('S' - '0')
+			|| cub->map->grid[i][j] == ('E' - '0')
+			|| cub->map->grid[i][j] == ('W' - '0'))
+			{
+				cub->map->player_x = i;
+				cub->map->player_y = j;
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 bool	ends_with_cub(char *filename)

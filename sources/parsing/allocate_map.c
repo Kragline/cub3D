@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:11:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 21:39:41 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/29 16:04:58 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,26 +65,23 @@ static void	line_to_list(char **line, char *spawn_dir,
 static int	*to_int_arr(char *line, int max_width)
 {
 	int	i;
+	int	len;
 	int	*new;
 
 	i = 0;
+	len = safe_strlen(line);
 	new = malloc(sizeof(int) * max_width);
-	while (line[i] && line[i] == ' ')
-	{
-		new[i] = -1;
-		i++;
-	}
-	while (line[i])
-	{
-		if (line[i] == ' ')
-			new[i] = 0;
-		else
-			new[i] = line[i] - '0';
-		i++;
-	}
 	while (i < max_width)
 	{
-		new[i] = -1;
+		if (i < len)
+		{
+			if (line[i] == ' ')
+				new[i] = -1;
+			else
+				new[i] = line[i] - '0';
+		}
+		else
+			new[i] = -1;
 		i++;
 	}
 	return (new);

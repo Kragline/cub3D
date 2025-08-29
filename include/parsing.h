@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:20:12 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 20:10:53 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/29 16:01:37 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	find_spawn_point(char *line);
 
 //			additional
 bool	missing_values(t_cub3d *cub);
+void	find_start_pos(t_cub3d *cub);
 bool	ends_with_cub(char *filename);
 int		safe_strlen(char *str);
 

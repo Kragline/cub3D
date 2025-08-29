@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 20:03:51 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/29 16:02:14 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ bool	parse_the_map(char *filename, t_cub3d *cub)
 		return (false);
 	if (!map_is_closed(cub))
 		return (print_error("Map is not closed"), false);
+	find_start_pos(cub);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:03:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/27 14:08:02 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/29 16:05:52 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ static void	parse_texture(char **line, int index, char **dest, t_cub3d *cub)
 		parsing_error(cub, NULL, line, "Duplicate element in map");
 	i = index;
 	if (!(*line)[i] || (*line)[i] == '\n')
-		parsing_error(cub, NULL, line, "Wrong value for tecxture");
+		parsing_error(cub, NULL, line, "Wrong value for texture");
 	while ((*line)[i] && is_space((*line)[i]))
 		i++;
 	if (!(*line)[i] || (*line)[i] == '\n')
-		parsing_error(cub, NULL, line, "Wrong value for tecxture");
+		parsing_error(cub, NULL, line, "Wrong value for texture");
 	start_index = i;
 	while ((*line)[i] && !is_space((*line)[i]) && (*line)[i] != '\n')
 		i++;
