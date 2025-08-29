@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 20:22:12 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:28:42 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,20 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_player
+{
+	int		radius;
+	int		turn_directon;
+	int		walk_direction;
+	float	rotation_angle;
+	float	move_speed;
+	float	rotation_speed;
+}	t_player;
+
 typedef struct s_cub3d
 {
 	t_textures	*textures;
+	t_player	*player;
 	t_colors	*colors;
 	t_map		*map;
 	t_img		*img;
