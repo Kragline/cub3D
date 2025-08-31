@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:11:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/29 16:04:58 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/31 16:58:19 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,5 @@ void	allocate_map(t_cub3d *cub, char **line)
 	}
 	cub->map->player_dir = spawn_dir;
 	from_list_to_grid(&map_list, cub);
+	validate_edges(cub);
 }

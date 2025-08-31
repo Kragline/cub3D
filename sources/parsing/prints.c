@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:34:09 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 20:37:01 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/31 18:00:20 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	parsing_error(t_cub3d *cub, t_list **map_list,
 		}
 	}
 	get_next_line(-1);
-	print_error(message);
+	if (message)
+		print_error(message);
 	if (line && *line)
 		print_help_message(*line, cub->map->filename, cub->map->lines_read);
 	close(cub->map->map_fd);

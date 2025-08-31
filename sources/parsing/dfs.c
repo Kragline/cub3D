@@ -6,17 +6,11 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 19:59:10 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/29 16:02:30 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/31 17:37:19 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-static bool	is_spawn(int c)
-{
-	return (c == ('N' - '0') || c == ('S' - '0')
-		|| c == ('E' - '0') || c == ('W' - '0'));
-}
 
 static int	**dup_grid(int rows, int cols, int **grid)
 {
@@ -64,10 +58,8 @@ bool	map_is_closed(t_cub3d *cub)
 {
 	int		i;
 	int		**grid;
-	bool	is_closed;
 
 	i = -1;
-	is_closed = true;
 	grid = dup_grid(cub->map->rows, cub->map->cols, cub->map->grid);
 	if (!grid)
 		parsing_error(cub, NULL, NULL, "Failed to allocate map for dfs");

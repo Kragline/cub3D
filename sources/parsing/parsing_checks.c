@@ -6,11 +6,19 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:46:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 21:17:36 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/31 17:36:05 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+bool	is_spawn(char c)
+{
+	if (c == ('N' - '0') || c == ('S' - '0')
+		|| c == ('E' - '0') || c == ('W' - '0'))
+		return (true);
+	return (false);
+}
 
 bool	line_is_empty(char *line)
 {

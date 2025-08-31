@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/29 16:02:14 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/31 18:05:36 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static void	change_the_line(bool change_line, char **line, t_cub3d *cub)
 		}
 		*line = get_next_line(cub->map->map_fd);
 		cub->map->lines_read++;
+		if (!*line && !cub->map->grid)
+			parsing_error(cub, NULL, line, "Invalid file: no map");
 		if (!*line)
 			parsing_error(cub, NULL, line, "Invalid file");
 	}
@@ -94,7 +96,9 @@ bool	parse_the_map(char *filename, t_cub3d *cub)
 	if (missing_values(cub))
 		return (false);
 	if (!map_is_closed(cub))
-		return (print_error("Map is not closed"), false);
+		return (print_error("Open map or walkable area outside"), false);
 	find_start_pos(cub);
+	if (cub->map->player_x == INT_MIN || cub->map->player_y == INT_MIN)
+		return (print_error("No spawn point"), false);
 	return (true);
 }
