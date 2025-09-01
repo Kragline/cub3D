@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:10:55 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/31 18:09:16 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/01 19:04:03 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,30 +56,6 @@ void	find_start_pos(t_cub3d *cub)
 			j++;
 		}
 		i++;
-	}
-}
-
-void	validate_edges(t_cub3d *cub)
-{
-	int	i;
-
-	i = -1;
-	while (++i < cub->map->cols)
-	{
-		if (cub->map->grid[0][i] == 0 || is_spawn(cub->map->grid[0][i]))
-			parsing_error(cub, NULL, NULL, TOP_MESSAGE);
-		if (cub->map->grid[cub->map->rows - 1][i] == 0
-			|| is_spawn(cub->map->grid[cub->map->rows - 1][i]))
-			parsing_error(cub, NULL, NULL, BOTTOM_MESSAGE);
-	}
-	i = -1;
-	while (++i < cub->map->rows)
-	{
-		if (cub->map->grid[i][0] == 0 || is_spawn(cub->map->grid[i][0]))
-			parsing_error(cub, NULL, NULL, LEFT_MESSAGE);
-		if (cub->map->grid[i][cub->map->cols - 1] == 0
-			|| is_spawn(cub->map->grid[i][cub->map->cols - 1]))
-			parsing_error(cub, NULL, NULL, RIGHT_MESSAGE);
 	}
 }
 

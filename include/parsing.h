@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:20:12 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/31 17:36:17 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/01 19:04:17 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 # include <limits.h>
 # include <stdbool.h>
 # include "../libft/libft.h"
-
-# define TOP_MESSAGE "Open map: floor or spawn in the top line"
-# define BOTTOM_MESSAGE "Open map: floor or spawn in the bottom line"
-# define LEFT_MESSAGE "Open map: floor or spawn in the left column"
-# define RIGHT_MESSAGE "Open map: floor or spawn in the right column"
 
 typedef struct s_cub3d	t_cub3d;
 
@@ -52,7 +47,6 @@ char	find_spawn_point(char *line);
 //			additional
 bool	missing_values(t_cub3d *cub);
 void	find_start_pos(t_cub3d *cub);
-void	validate_edges(t_cub3d *cub);
 bool	ends_with_cub(char *filename);
 int		safe_strlen(char *str);
 

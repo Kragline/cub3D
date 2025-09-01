@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:11:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/31 16:58:19 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/01 19:03:54 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static bool	break_the_loop(char **line, t_list **map_list, t_cub3d *cub)
 	new_line = NULL;
 	*line = get_next_line(cub->map->map_fd);
 	cub->map->lines_read++;
+	if (line_is_empty(*line))
+		return (free(*line), true);
 	if (!is_map_line(*line))
 	{
 		new_line = get_next_line(cub->map->map_fd);
@@ -130,5 +132,4 @@ void	allocate_map(t_cub3d *cub, char **line)
 	}
 	cub->map->player_dir = spawn_dir;
 	from_list_to_grid(&map_list, cub);
-	validate_edges(cub);
 }
