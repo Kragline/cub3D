@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/29 14:28:42 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:39:34 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_img
 typedef struct s_player
 {
 	int		radius;
-	int		turn_directon;
+	int		turn_direction;
 	int		walk_direction;
 	float	rotation_angle;
 	float	move_speed;

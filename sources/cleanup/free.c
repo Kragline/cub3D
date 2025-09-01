@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 17:11:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 20:35:48 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:35:57 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void	free_cub(t_cub3d *cub)
 		mlx_destroy_display(cub->mlx);
 	if (cub->img)
 		free(cub->img);
-	free(cub->mlx);
+	if (cub->player)
+		free(cub->player);
+	if (cub->mlx)
+		free(cub->mlx);
 	free(cub);
 }

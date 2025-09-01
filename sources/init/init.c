@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/29 14:30:19 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/01 17:25:16 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,31 @@ static int	mouse_handle(int button, int x, int y, t_cub3d *cub)
 
 static int	key_handle(int keysym, t_cub3d *cub)
 {
+	int	move_step;
+
 	if (keysym == XK_Escape)
 	{
 		free_cub(cub);
 		exit (1);
 	}
+	if (keysym == XK_w)
+		cub->player->walk_direction = 1;
+	else if (keysym == XK_s)
+		cub->player->walk_direction = -1;
+	else if (keysym == XK_a)
+		cub->player->turn_direction = -1;
+	else if (keysym == XK_d)
+		cub->player->turn_direction = 1;
+	cub->player->rotation_angle += cub->player->turn_direction * cub->player->rotation_speed;
+	move_step = cub->player->walk_direction * cub->player->move_speed;
+	cub->map->player_x += cos(cub->player->rotation_angle) * move_step;
+	cub->map->player_y += sin(cub->player->rotation_angle) * move_step;
+	mlx_destroy_image(cub->mlx, cub->img->img_ptr);
+	cub->img->img_ptr = mlx_new_image(cub->mlx, cub->map->cols * 64,
+			cub->map->rows * 64);
+	update_mini_map(cub);
+	cub->player->walk_direction = 0;
+	cub->player->turn_direction = 0;
 	return (0);
 }
 
@@ -82,6 +102,9 @@ t_cub3d	*init_cub(void)
 		return (free_cub(cub), NULL);
 	cub->img = malloc(sizeof(t_img));
 	if (!cub->img)
+		return (free_cub(cub), NULL);
+	cub->player = malloc(sizeof(t_player));
+	if (!cub->player)
 		return (free_cub(cub), NULL);
 	set_default_values(cub);
 	return (cub);
