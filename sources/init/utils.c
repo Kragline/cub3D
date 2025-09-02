@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/01 17:17:43 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/02 15:27:13 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,9 @@ void	set_default_values(t_cub3d *cub)
 	cub->colors->ceiling = INT_MIN;
 	cub->colors->floor = INT_MIN;
 	cub->textures->east = NULL;
-	cub->textures->ea_name = NULL;
 	cub->textures->west = NULL;
-	cub->textures->we_name = NULL;
 	cub->textures->north = NULL;
-	cub->textures->no_name = NULL;
 	cub->textures->south = NULL;
-	cub->textures->so_name = NULL;
 	cub->mlx = NULL;
 	cub->mlx_win = NULL;
 	cub->img->img_ptr = NULL;

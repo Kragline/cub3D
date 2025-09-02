@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/01 17:25:16 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/02 15:37:22 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ static int	key_handle(int keysym, t_cub3d *cub)
 
 void	init_window(t_cub3d *cub)
 {
-	cub->mlx = mlx_init();
-	if (!cub->mlx)
-		free_cub(cub);
 	cub->mlx_win = mlx_new_window(cub->mlx, cub->map->cols * 64,
 			cub->map->rows * 64, "cub3D");
 	if (!cub->mlx_win)
@@ -107,5 +104,8 @@ t_cub3d	*init_cub(void)
 	if (!cub->player)
 		return (free_cub(cub), NULL);
 	set_default_values(cub);
+	cub->mlx = mlx_init();
+	if (!cub->mlx)
+		free_cub(cub);
 	return (cub);
 }

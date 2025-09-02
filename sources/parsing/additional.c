@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:10:55 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/01 19:04:03 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/02 15:28:08 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ bool	missing_values(t_cub3d *cub)
 		return (print_error("No map allocated"), true);
 	if (cub->map->grid
 		&& cub->colors->ceiling == INT_MIN && cub->colors->floor == INT_MIN
-		&& !cub->textures->ea_name && !cub->textures->we_name
-		&& !cub->textures->no_name && !cub->textures->so_name)
+		&& !cub->textures->east && !cub->textures->west
+		&& !cub->textures->north && !cub->textures->south)
 		return (print_error("Map before textures"), true);
 	if (cub->colors->ceiling == INT_MIN)
 		return (print_error("No ceiling color"), true);
 	if (cub->colors->floor == INT_MIN)
 		return (print_error("No floor color"), true);
-	if (!cub->textures->ea_name)
+	if (!cub->textures->east)
 		return (print_error("No east texture"), true);
-	if (!cub->textures->we_name)
+	if (!cub->textures->west)
 		return (print_error("No west texture"), true);
-	if (!cub->textures->no_name)
+	if (!cub->textures->north)
 		return (print_error("No north texture"), true);
-	if (!cub->textures->so_name)
+	if (!cub->textures->south)
 		return (print_error("No south texture"), true);
 	return (false);
 }

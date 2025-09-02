@@ -6,16 +6,19 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:03:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/29 16:05:52 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/02 15:40:36 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	parse_texture(char **line, int index, char **dest, t_cub3d *cub)
+static void	parse_texture(char **line, int index, void **dest, t_cub3d *cub)
 {
-	int	i;
-	int	start_index;
+	int		i;
+	int		width;
+	int		height;
+	int		start_index;
+	char	*texture_name;
 
 	if (*dest)
 		parsing_error(cub, NULL, line, "Duplicate element in map");
@@ -29,7 +32,11 @@ static void	parse_texture(char **line, int index, char **dest, t_cub3d *cub)
 	start_index = i;
 	while ((*line)[i] && !is_space((*line)[i]) && (*line)[i] != '\n')
 		i++;
-	*dest = ft_substr((*line) + start_index, 0, i - start_index);
+	texture_name = ft_substr((*line) + start_index, 0, i - start_index);
+	*dest = mlx_xpm_file_to_image(cub->mlx, texture_name, &width, &height);
+	free(texture_name);
+	if (!*dest)
+		parsing_error(cub, NULL, line, "Failed to create mlx image");
 }
 
 static int	parse_int_0_255(char *line, int *i)
@@ -101,13 +108,13 @@ bool	try_parse_element(char **line, t_cub3d *cub)
 		i++;
 	}
 	if (!ft_strncmp(*line + i, "NO ", 3))
-		return (parse_texture(line, i + 2, &cub->textures->no_name, cub), true);
+		return (parse_texture(line, i + 2, &cub->textures->north, cub), true);
 	else if (!ft_strncmp(*line + i, "SO ", 3))
-		return (parse_texture(line, i + 2, &cub->textures->so_name, cub), true);
+		return (parse_texture(line, i + 2, &cub->textures->south, cub), true);
 	else if (!ft_strncmp(*line + i, "WE ", 3))
-		return (parse_texture(line, i + 2, &cub->textures->we_name, cub), true);
+		return (parse_texture(line, i + 2, &cub->textures->west, cub), true);
 	else if (!ft_strncmp(*line + i, "EA ", 3))
-		return (parse_texture(line, i + 2, &cub->textures->ea_name, cub), true);
+		return (parse_texture(line, i + 2, &cub->textures->east, cub), true);
 	else if (!ft_strncmp(*line + i, "F ", 2))
 		return (parse_color(line, i + 1, &cub->colors->floor, cub), true);
 	else if (!ft_strncmp(*line + i, "C ", 2))
