@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:10:55 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/02 15:28:08 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/02 17:19:03 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,20 @@ void	find_start_pos(t_cub3d *cub)
 		}
 		i++;
 	}
+}
+
+bool	valid_commas(char *line, int start_index)
+{
+	int	commas;
+
+	commas = 0;
+	while (line[start_index] && line[start_index] != '\n')
+	{
+		if (line[start_index] == ',')
+			commas++;
+		start_index++;
+	}
+	return (commas == 2);
 }
 
 bool	ends_with_cub(char *filename)
