@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/04 12:58:44 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/04 14:44:48 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ static int	key_handle(int keysym, t_cub3d *cub)
 {
 	float	move_step;
 	float	strafe_step;
+	float	oldX;
+	float	oldY;
 
+	oldX = cub->player->x;
+	oldY = cub->player->y;
 	if (keysym == XK_Escape)
 	{
 		free_cub(cub);
@@ -56,9 +60,14 @@ static int	key_handle(int keysym, t_cub3d *cub)
 	cub->player->x += cos(cub->player->rotation_angle + M_PI_2) * strafe_step;
 	cub->player->y += sin(cub->player->rotation_angle) * move_step;
 	cub->player->y += sin(cub->player->rotation_angle + M_PI_2) * strafe_step;
+	if (map_wall(cub->map->grid, cub->player->x, cub->player->y))
+	{
+		cub->player->x = oldX;
+		cub->player->y = oldY;
+	}
 	mlx_destroy_image(cub->mlx, cub->img->img_ptr);
-	cub->img->img_ptr = mlx_new_image(cub->mlx, cub->map->cols * TILE,
-			cub->map->rows * TILE);
+	cub->img->img_ptr = mlx_new_image(cub->mlx, WIDTH,
+			HEIGHT);
 	update_mini_map(cub);
 	if (cub->player->walk_direction)
 		cub->player->walk_direction = 0;
@@ -74,12 +83,12 @@ void	init_window(t_cub3d *cub)
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 		free_cub(cub);
-	cub->mlx_win = mlx_new_window(cub->mlx, cub->map->cols * TILE,
-			cub->map->rows * TILE, "cub3D");
+	cub->mlx_win = mlx_new_window(cub->mlx, WIDTH,
+			HEIGHT, "cub3D");
 	if (!cub->mlx_win)
 		free_cub(cub);
-	cub->img->img_ptr = mlx_new_image(cub->mlx, cub->map->cols * TILE,
-			cub->map->rows * TILE);
+	cub->img->img_ptr = mlx_new_image(cub->mlx, WIDTH,
+			HEIGHT);
 	if (!cub->img->img_ptr)
 		free_cub(cub);
 	cub->img->pixels_ptr = mlx_get_data_addr(cub->img->img_ptr,

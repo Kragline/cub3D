@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:36:33 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/01 16:48:04 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/04 14:48:31 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,16 @@ void draw_line(t_img *img, int x0, int y0, int x1, int y1, int color)
 			y0 += sy;
 		}
 	}
+}
+
+int	map_wall(int **grid, float x, float y)
+{
+	int	map_grid_index_x;
+	int	map_grid_index_y;
+
+	if (x < 0 || x > WIDTH || y < 0 || y > WIDTH)
+		return (1);
+	map_grid_index_x = floor(x / TILE);
+	map_grid_index_y = floor(y / TILE);
+	return (grid[map_grid_index_y][map_grid_index_x] != 0);
 }

@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:43:32 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/04 11:55:22 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/04 14:41:04 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ void	rect(t_img *img, int *coords, int tile, int color);
 void	circle(t_img *img, int xc, int yc, int r);
 void	put_pixel(t_img *data, int x, int y, int color);
 void	draw_line(t_img *img, int x0, int y0, int x1, int y1, int color); //TODO Delete this shit later
+int		map_wall(int **grid, float x, float y);
 
 #endif
