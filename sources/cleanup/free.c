@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 17:11:23 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/02 15:26:56 by armarake         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:35:57 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,14 @@ void	free_grid(int ***grid)
 
 static void	free_textures(t_cub3d *cub)
 {
-	if (cub->textures->north)
-	{
-		mlx_destroy_image(cub->mlx, cub->textures->north);
-		cub->textures->north = NULL;
-	}
-	if (cub->textures->south)
-	{
-		mlx_destroy_image(cub->mlx, cub->textures->south);
-		cub->textures->south = NULL;
-	}
-	if (cub->textures->west)
-	{
-		mlx_destroy_image(cub->mlx, cub->textures->west);
-		cub->textures->west = NULL;
-	}
-	if (cub->textures->east)
-	{
-		mlx_destroy_image(cub->mlx, cub->textures->east);
-		cub->textures->east = NULL;
-	}
+	if (cub->textures->ea_name)
+		free(cub->textures->ea_name);
+	if (cub->textures->we_name)
+		free(cub->textures->we_name);
+	if (cub->textures->no_name)
+		free(cub->textures->no_name);
+	if (cub->textures->so_name)
+		free(cub->textures->so_name);
 	if (cub->textures)
 		free(cub->textures);
 }

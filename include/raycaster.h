@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:43:32 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/01 16:48:32 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/04 11:55:22 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <math.h>
 
 # define TILE 64
+# define FOV_ANGLE (60 * (M_PI / 180))
 
 typedef struct s_cub3d	t_cub3d;
 typedef struct s_img	t_img;

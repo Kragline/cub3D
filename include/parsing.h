@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:20:12 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/02 17:15:56 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/01 19:04:17 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,6 @@ void	allocate_map(t_cub3d *cub, char **line);
 //			element parsing
 bool	try_parse_element(char **line, t_cub3d *cub);
 
-//			element parsing utils
-int		parse_int_0_255(char *line, int *i);
-void	get_color(char **line, int *i, int *col, t_cub3d *cub);
-void	texture_checks(int *i, char **line, t_cub3d *cub);
-bool	ends_with_xpm(char *filename);
-
 //			parsing checks
 bool	is_spawn(char c);
 bool	line_is_empty(char *line);
@@ -53,7 +47,6 @@ char	find_spawn_point(char *line);
 //			additional
 bool	missing_values(t_cub3d *cub);
 void	find_start_pos(t_cub3d *cub);
-bool	valid_commas(char *line, int start_index);
 bool	ends_with_cub(char *filename);
 int		safe_strlen(char *str);
 

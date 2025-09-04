@@ -1,7 +1,7 @@
-NO ./textures/door.xpm
-SO ./textures/eagle.xpm
-WE
-EA ./textures/wall.xpm
+NO ./textures/test_texture1
+SO ./textures/test_texture2
+WE 
+EA ./textures/test_texture4
 
 F 220,100,0
 C 225,30,0

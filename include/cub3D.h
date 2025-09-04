@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/02 15:23:45 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/04 12:52:22 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,13 @@ typedef enum e_state
 typedef struct s_textures
 {
 	void	*north;
+	char	*no_name;
 	void	*south;
+	char	*so_name;
 	void	*east;
+	char	*ea_name;
 	void	*west;
+	char	*we_name;
 }	t_textures;
 
 typedef struct s_colors
@@ -74,9 +78,12 @@ typedef struct s_img
 
 typedef struct s_player
 {
+	float		x;
+	float		y;
 	int		radius;
 	int		turn_direction;
 	int		walk_direction;
+	int		strafe_direction;
 	float	rotation_angle;
 	float	move_speed;
 	float	rotation_speed;

@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/02 15:27:13 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/04 12:51:58 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,22 @@ void	set_default_values(t_cub3d *cub)
 	cub->colors->ceiling = INT_MIN;
 	cub->colors->floor = INT_MIN;
 	cub->textures->east = NULL;
+	cub->textures->ea_name = NULL;
 	cub->textures->west = NULL;
+	cub->textures->we_name = NULL;
 	cub->textures->north = NULL;
+	cub->textures->no_name = NULL;
 	cub->textures->south = NULL;
+	cub->textures->so_name = NULL;
 	cub->mlx = NULL;
 	cub->mlx_win = NULL;
 	cub->img->img_ptr = NULL;
-	cub->player->radius = 10;
+	cub->player->x = 0;
+	cub->player->y = 0;
 	cub->player->turn_direction = 0;
 	cub->player->walk_direction = 0;
+	cub->player->strafe_direction = 0;
 	cub->player->rotation_angle = M_PI / 2;
-	cub->player->move_speed = 3;
-	cub->player->rotation_speed = 3 * (M_PI / 180);
+	cub->player->move_speed = 50;
+	cub->player->rotation_speed = 45 * (M_PI / 180);
 }
