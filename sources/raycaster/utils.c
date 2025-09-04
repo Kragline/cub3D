@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:36:33 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/04 14:48:31 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:22:15 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,6 @@ void	rect(t_img *img, int *coords, int tile, int color)
 			j++;
 		}
 		i++;
-	}
-}
-
-void	circle(t_img *img, int xc, int yc, int r)
-{
-	int	x;
-	int	y;
-	int	p;
-
-	x = 0;
-	y = r;
-	p = 1 - r;
-	while (x <= y)
-	{
-		put_pixel(img, xc + x, yc + y, 0xFF0000);
-		put_pixel(img, xc - x, yc + y, 0xFF0000);
-		put_pixel(img, xc + x, yc - y, 0xFF0000);
-		put_pixel(img, xc - x, yc - y, 0xFF0000);
-		put_pixel(img, xc + y, yc + x, 0xFF0000);
-		put_pixel(img, xc - y, yc + x, 0xFF0000);
-		put_pixel(img, xc + y, yc - x, 0xFF0000);
-		put_pixel(img, xc - y, yc - x, 0xFF0000);
-		x++;
-		if (p < 0)
-			p = p + 2 * x + 1;
-		else
-		{
-			y--;
-			p = p + 2 * (x - y) + 1;
-		}
 	}
 }
 
@@ -100,14 +70,14 @@ void draw_line(t_img *img, int x0, int y0, int x1, int y1, int color)
 	}
 }
 
-int	map_wall(int **grid, float x, float y)
+int	map_wall(t_cub3d *cub)
 {
 	int	map_grid_index_x;
 	int	map_grid_index_y;
 
-	if (x < 0 || x > WIDTH || y < 0 || y > WIDTH)
-		return (1);
-	map_grid_index_x = floor(x / TILE);
-	map_grid_index_y = floor(y / TILE);
-	return (grid[map_grid_index_y][map_grid_index_x] != 0);
+	if (cub->player->x < 1 || cub->player->x > cub->map->cols - 2 || cub->player->y < 1 || cub->player->y > cub->map->rows - 2)
+		return (0);
+	map_grid_index_x = floor(cub->player->x / TILE);
+	map_grid_index_y = floor(cub->player->y / TILE);
+	return (cub->map->grid[map_grid_index_y][map_grid_index_x] == 1);
 }
