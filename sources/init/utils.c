@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/05 19:45:41 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/07 11:29:51 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	set_default_values(t_cub3d *cub)
 	cub->player->turn_direction = 0;
 	cub->player->walk_direction = 0;
 	cub->player->strafe_direction = 0;
-	cub->player->rotation_angle = M_PI / 2;
+	cub->player->rotation_angle = M_PI * 1.5;
 	cub->player->move_speed = TILE;
 	cub->player->rotation_speed = 45 * (M_PI / 180);
 }
