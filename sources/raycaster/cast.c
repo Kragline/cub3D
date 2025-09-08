@@ -6,7 +6,7 @@
 /*   By: nasargsy <nasargsy@student.42yerevan.am>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 14:40:13 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/08 16:02:49 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/08 16:08:16 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	cast_rays(t_cub3d *cub)
 				+ (ray_y - cub->player->y) * (ray_y - cub->player->y));
 		dist *= cos(cub->player->rotation_angle - ray_angle);
 		dist *= TILE;
+		if (dist < 1.0f)
+			dist = 1.0f;
 		wall_height = (int)((TILE * HEIGHT) / (dist + 0.0001f));
 		draw_line(cub->img, i, 	(HEIGHT - wall_height) / 2,
 				i, (HEIGHT + wall_height) / 2,
