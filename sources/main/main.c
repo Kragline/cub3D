@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:49:40 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/26 17:36:40 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/09 15:45:41 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int argc, char **argv)
 		return (print_error("Init error"), 1);
 	if (!parse_the_map(argv[1], cub))
 		return (free_cub(cub), 1);
-	print_values(cub);
 	init_window(cub);
 	free_cub(cub);
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nasargsy <nasargsy@student.42yerevan.am>   +#+  +:+       +#+        */
+/*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 14:40:13 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/09 13:48:27 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/09 15:35:26 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	cast_rays(t_cub3d *cub)
 				(ray_y - (cub->player->y * TILE + TILE / 2.0f)) *
 				(ray_y - (cub->player->y * TILE + TILE / 2.0f)));
 		dist *= cos(cub->player->rotation_angle - ray_angle);
+		if (dist < 1.0f)
+			dist = 1.0f;
 		wall_height = (int)((TILE * HEIGHT) / dist);
 		draw_wall(cub->img, i, wall_height);
 		ray_angle += FOV_ANGLE / NUM_RAYS;

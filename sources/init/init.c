@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/08 15:59:56 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/09 15:39:27 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ static int	key_handle(int keysym, t_cub3d *cub)
 		free_cub(cub);
 		exit (1);
 	}
+	mlx_destroy_image(cub->mlx, cub->img->img_ptr);
+	cub->img->img_ptr = mlx_new_image(cub->mlx, WIDTH,
+			HEIGHT);
 	if (keysym == XK_w)
 		cub->player->walk_direction = 1;
 	else if (keysym == XK_s)
@@ -60,16 +63,16 @@ static int	key_handle(int keysym, t_cub3d *cub)
 	cub->player->x += cos(cub->player->rotation_angle + M_PI_2) * strafe_step;
 	cub->player->y += sin(cub->player->rotation_angle) * move_step;
 	cub->player->y += sin(cub->player->rotation_angle + M_PI_2) * strafe_step;
-	if (map_wall(cub, cub->player->x, cub->player->y))
+	if (map_wall(cub, cub->player->x * TILE, cub->player->y * TILE))
 	{
 		cub->player->x = oldX;
 		cub->player->y = oldY;
 	}
-	mlx_destroy_image(cub->mlx, cub->img->img_ptr);
-	cub->img->img_ptr = mlx_new_image(cub->mlx, WIDTH,
-			HEIGHT);
-	cast_rays(cub);
-	update_mini_map(cub);
+	else
+	{
+		cast_rays(cub);
+		update_mini_map(cub);
+	}
 	if (cub->player->walk_direction)
 		cub->player->walk_direction = 0;
 	if (cub->player->turn_direction)
