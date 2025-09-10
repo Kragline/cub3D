@@ -6,13 +6,31 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 14:40:13 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/09 15:35:26 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/10 16:27:25 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	draw_wall(t_img *img, int i, int wall_height)
+static void	draw_rest(t_cub3d *cub, int i, int start_y, int end_y)
+{
+	int	y;
+
+	y = 0;
+	while (y != start_y)
+	{
+		put_pixel(cub->img, i, y, cub->colors->ceiling);
+		y++;
+	}
+	y = end_y + 1;
+	while (y != HEIGHT)
+	{
+		put_pixel(cub->img, i, y, cub->colors->floor);
+		y++;
+	}
+}
+
+static void	draw_wall(t_cub3d *cub, int i, int wall_height)
 {
 	int	start_y;
 	int	end_y;
@@ -23,7 +41,8 @@ static void	draw_wall(t_img *img, int i, int wall_height)
 		start_y = 0;
 	if (end_y >= HEIGHT)
 		end_y = HEIGHT - 1;
-	draw_line(img, i, 	start_y, i, end_y, 0x0000FF);
+	draw_line(cub->img, i, start_y, i, end_y, 0x0000FF);
+	draw_rest(cub, i, start_y, end_y);
 }
 
 void	cast_rays(t_cub3d *cub)
@@ -54,7 +73,7 @@ void	cast_rays(t_cub3d *cub)
 		if (dist < 1.0f)
 			dist = 1.0f;
 		wall_height = (int)((TILE * HEIGHT) / dist);
-		draw_wall(cub->img, i, wall_height);
+		draw_wall(cub, i, wall_height);
 		ray_angle += FOV_ANGLE / NUM_RAYS;
 		i++;
 	}
