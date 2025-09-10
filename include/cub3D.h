@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/04 12:52:22 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/10 22:11:50 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,9 @@ typedef enum e_state
 typedef struct s_textures
 {
 	void	*north;
-	char	*no_name;
 	void	*south;
-	char	*so_name;
 	void	*east;
-	char	*ea_name;
 	void	*west;
-	char	*we_name;
 }	t_textures;
 
 typedef struct s_colors
