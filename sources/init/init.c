@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/11 13:42:06 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/11 14:14:50 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,10 @@ static int	key_handle(int keysym, t_cub3d *cub)
 
 void	init_window(t_cub3d *cub)
 {
-	cub->mlx_win = mlx_new_window(cub->mlx, WIDTH,
-			HEIGHT, "cub3D");
+	cub->mlx_win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!cub->mlx_win)
 		free_cub(cub);
-	cub->img->img_ptr = mlx_new_image(cub->mlx, WIDTH,
-			HEIGHT);
+	cub->img->img_ptr = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
 	if (!cub->img->img_ptr)
 		free_cub(cub);
 	cub->img->pixels_ptr = mlx_get_data_addr(cub->img->img_ptr,
@@ -75,9 +73,8 @@ void	init_window(t_cub3d *cub)
 			&cub->img->endian);
 	cub->player->x = cub->map->player_y;
 	cub->player->y = cub->map->player_x;
+	set_direction(cub);
 	render(cub);
-	cast_rays(cub);
-	render_mini_map(cub);
 	mlx_hook(cub->mlx_win,
 		KeyPress, KeyPressMask, key_handle, cub);
 	mlx_hook(cub->mlx_win,

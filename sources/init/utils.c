@@ -6,11 +6,23 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/10 22:12:41 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/11 14:24:58 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	set_direction(t_cub3d *cub)
+{
+	if (cub->map->player_dir == 'N')
+		cub->player->rotation_angle = M_PI * 1.5;
+	else if (cub->map->player_dir == 'S')
+		cub->player->rotation_angle = M_PI / 2;
+	else if (cub->map->player_dir == 'E')
+		cub->player->rotation_angle = M_PI * 2;
+	else if (cub->map->player_dir == 'W')
+		cub->player->rotation_angle = M_PI;
+}
 
 void	set_default_values(t_cub3d *cub)
 {
@@ -34,7 +46,6 @@ void	set_default_values(t_cub3d *cub)
 	cub->player->turn_direction = 0;
 	cub->player->walk_direction = 0;
 	cub->player->strafe_direction = 0;
-	cub->player->rotation_angle = M_PI * 1.5;
 	cub->player->move_speed = 5;
 	cub->player->rotation_speed = 5 * (M_PI / 180);
 }

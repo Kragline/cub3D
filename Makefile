@@ -1,7 +1,7 @@
 NAME = cub3D
 CC = cc
 
-CCFLAGS = -Wall -Wextra -Werror -O5
+CCFLAGS = -Wall -Wextra -Werror -O5 -g3
 MLXFLAGS = -Lmlx_Linux -lmlx_Linux -L ./minilibx-linux -Imlx_Linux -L ./libft -lft -lXext -lX11 -lm -lz
 
 GREEN = \033[1;32m
