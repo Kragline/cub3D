@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:00:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/02 17:15:38 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:10:22 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ void	get_color(char **line, int *i, int *col, t_cub3d *cub)
 	*col = parse_int_0_255(*line, i);
 	if (*col < 0)
 		parsing_error(cub, NULL, line, "Wrong value for color");
+}
+
+void	texture_name_check(char **name, char **line, t_cub3d *cub)
+{
+	if (!ends_with_xpm(*name))
+	{
+		free(*name);
+		parsing_error(cub, NULL, line, "Texture must have .xpm extension");
+	}
 }
 
 void	texture_checks(int *i, char **line, t_cub3d *cub)

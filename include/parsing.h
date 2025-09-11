@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:20:12 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/08 13:42:07 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:10:42 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ bool	is_space(char c);
 bool	is_map_char(char c);
 int		spawn_point_count(char *line);
 char	find_spawn_point(char *line);
+void	texture_name_check(char **name, char **line, t_cub3d *cub);
 
 //			additional
 bool	missing_values(t_cub3d *cub);

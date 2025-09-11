@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/10 22:11:50 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:28:08 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,25 @@ typedef enum e_state
 	ST_DONE
 }	t_state;
 
+typedef struct s_img
+{
+	void	*img_ptr;
+	char	*pixels_ptr;
+	int		bpp;
+	int		length;
+	int		endian;
+}	t_img;
+
 typedef struct s_textures
 {
-	void	*north;
-	void	*south;
-	void	*east;
-	void	*west;
+	t_img	*north;
+	char	*n_name;
+	t_img	*south;
+	char	*s_name;
+	t_img	*east;
+	char	*e_name;
+	t_img	*west;
+	char	*w_name;
 }	t_textures;
 
 typedef struct s_colors
@@ -62,15 +75,6 @@ typedef struct s_map
 	int		**grid;
 	char	*filename;
 }	t_map;
-
-typedef struct s_img
-{
-	void	*img_ptr;
-	char	*pixels_ptr;
-	int		bpp;
-	int		length;
-	int		endian;
-}	t_img;
 
 typedef struct s_player
 {

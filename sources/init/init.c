@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/11 14:14:50 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:38:41 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ static int	key_handle(int keysym, t_cub3d *cub)
 
 void	init_window(t_cub3d *cub)
 {
+	cub->mlx = mlx_init();
+	if (!cub->mlx)
+		free_cub(cub);
 	cub->mlx_win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!cub->mlx_win)
 		free_cub(cub);
@@ -73,6 +76,7 @@ void	init_window(t_cub3d *cub)
 			&cub->img->endian);
 	cub->player->x = cub->map->player_y;
 	cub->player->y = cub->map->player_x;
+	//
 	set_direction(cub);
 	render(cub);
 	mlx_hook(cub->mlx_win,
@@ -82,6 +86,26 @@ void	init_window(t_cub3d *cub)
 	mlx_hook(cub->mlx_win,
 		DestroyNotify, StructureNotifyMask, close_handle, cub);
 	mlx_loop(cub->mlx);
+}
+
+static bool	allocate_textures(t_cub3d *cub)
+{
+	cub->textures = malloc(sizeof(t_textures));
+	if (!cub->textures)
+		return (free_cub(cub), false);
+	cub->textures->east = malloc(sizeof(t_img));
+	if (!cub->textures->east)
+		return (free_cub(cub), false);
+	cub->textures->west = malloc(sizeof(t_img));
+	if (!cub->textures->west)
+		return (free_cub(cub), false);
+	cub->textures->south = malloc(sizeof(t_img));
+	if (!cub->textures->south)
+		return (free_cub(cub), false);
+	cub->textures->north = malloc(sizeof(t_img));
+	if (!cub->textures->north)
+		return (free_cub(cub), false);
+	return (true);
 }
 
 t_cub3d	*init_cub(void)
@@ -97,9 +121,8 @@ t_cub3d	*init_cub(void)
 	cub->map = malloc(sizeof(t_map));
 	if (!cub->map)
 		return (free_cub(cub), NULL);
-	cub->textures = malloc(sizeof(t_textures));
-	if (!cub->textures)
-		return (free_cub(cub), NULL);
+	if (!allocate_textures(cub))
+		return (NULL);
 	cub->img = malloc(sizeof(t_img));
 	if (!cub->img)
 		return (free_cub(cub), NULL);
@@ -107,8 +130,5 @@ t_cub3d	*init_cub(void)
 	if (!cub->player)
 		return (free_cub(cub), NULL);
 	set_default_values(cub);
-	cub->mlx = mlx_init();
-	if (!cub->mlx)
-		free_cub(cub);
 	return (cub);
 }

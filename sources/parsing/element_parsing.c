@@ -6,19 +6,16 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:03:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/02 17:16:23 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:40:07 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void	parse_texture(char **line, int index, void **dest, t_cub3d *cub)
+static void	parse_texture(char **line, int index, char **dest, t_cub3d *cub)
 {
 	int		i;
-	int		width;
-	int		height;
 	int		start_index;
-	char	*texture_name;
 
 	if (*dest)
 		parsing_error(cub, NULL, line, "Duplicate element in map");
@@ -27,16 +24,15 @@ static void	parse_texture(char **line, int index, void **dest, t_cub3d *cub)
 	start_index = i;
 	while ((*line)[i] && !is_space((*line)[i]) && (*line)[i] != '\n')
 		i++;
-	texture_name = ft_substr((*line) + start_index, 0, i - start_index);
-	if (!ends_with_xpm(texture_name))
-	{
-		free(texture_name);
+	(*dest) = ft_substr((*line) + start_index, 0, i - start_index);
+	if (!ends_with_xpm(*dest))
 		parsing_error(cub, NULL, line, "Texture must have .xpm extension");
-	}
-	*dest = mlx_xpm_file_to_image(cub->mlx, texture_name, &width, &height);
-	free(texture_name);
-	if (!*dest)
-		parsing_error(cub, NULL, line, "Failed to create mlx image");
+	// (*dest)->img_ptr = mlx_xpm_file_to_image(cub->mlx, name, &width, &height);
+	// (*dest)->pixels_ptr = mlx_get_data_addr((*dest)->img_ptr, &((*dest)->bpp),
+	// 	&((*dest)->length),
+	// 	&((*dest)->endian));
+	// if (!*dest)
+	// 	parsing_error(cub, NULL, line, "Failed to create mlx image");
 }
 
 static void	parse_color(char **line, int index, int *dest, t_cub3d *cub)
@@ -78,13 +74,13 @@ bool	try_parse_element(char **line, t_cub3d *cub)
 		i++;
 	}
 	if (!ft_strncmp(*line + i, "NO ", 3))
-		return (parse_texture(line, i + 2, &cub->textures->north, cub), true);
+		return (parse_texture(line, i + 2, &cub->textures->n_name, cub), true);
 	else if (!ft_strncmp(*line + i, "SO ", 3))
-		return (parse_texture(line, i + 2, &cub->textures->south, cub), true);
+		return (parse_texture(line, i + 2, &cub->textures->s_name, cub), true);
 	else if (!ft_strncmp(*line + i, "WE ", 3))
-		return (parse_texture(line, i + 2, &cub->textures->west, cub), true);
+		return (parse_texture(line, i + 2, &cub->textures->w_name, cub), true);
 	else if (!ft_strncmp(*line + i, "EA ", 3))
-		return (parse_texture(line, i + 2, &cub->textures->east, cub), true);
+		return (parse_texture(line, i + 2, &cub->textures->e_name, cub), true);
 	else if (!ft_strncmp(*line + i, "F ", 2))
 		return (parse_color(line, i + 1, &cub->colors->floor, cub), true);
 	else if (!ft_strncmp(*line + i, "C ", 2))
