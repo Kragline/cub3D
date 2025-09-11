@@ -6,11 +6,12 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 14:40:13 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/10 16:27:25 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/11 13:19:11 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include <stdio.h>
 
 static void	draw_rest(t_cub3d *cub, int i, int start_y, int end_y)
 {
