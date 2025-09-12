@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/11 15:38:41 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/11 20:56:15 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	init_window(t_cub3d *cub)
 			&cub->img->endian);
 	cub->player->x = cub->map->player_y;
 	cub->player->y = cub->map->player_x;
-	//
+	initialize_textures(cub);
 	set_direction(cub);
 	render(cub);
 	mlx_hook(cub->mlx_win,
