@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 14:40:13 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/12 17:15:45 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:07:33 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static void	draw_wall(t_cub3d *cub, int x, float ray_x, int wall_height)
 	int	y;
 	int	distance_from_top;
 
-	start_y = (HEIGHT - wall_height) / 2;
-	end_y = (HEIGHT + wall_height) / 2;
+	start_y = (HEIGHT / 2) - (wall_height / 2);
+	end_y = (HEIGHT / 2) + (wall_height / 2);
 	if (start_y < 0)
 		start_y = 0;
 	if (end_y >= HEIGHT)
@@ -59,21 +59,19 @@ static void	draw_wall(t_cub3d *cub, int x, float ray_x, int wall_height)
 	{
 		distance_from_top = y + (wall_height / 2) - (HEIGHT / 2);
 		put_pixel(cub->img, x, y, get_pixel(cub->textures->west,
-					((int)ray_x % 64), distance_from_top * ((float)64 / wall_height)));
+					(int)ray_x % 64, distance_from_top * ((float)64 / wall_height)));
 		y++;
 	}
 	draw_rest(cub, x, start_y, end_y);
 }
 
-static int	strip_wall_height(float dist, float ray_angle, float player_angle)
+static int	strip_wall_height(float dist)
 {
-	float	perp_distance;
 	float	distance_proj_plane;
 	float	projected_wall_height;
 
-	perp_distance = dist * cos(ray_angle - player_angle);
 	distance_proj_plane = (WIDTH / 2) / tan(FOV_ANGLE / 2);
-	projected_wall_height = (TILE / perp_distance) * distance_proj_plane;
+	projected_wall_height = (TILE / dist) * distance_proj_plane;
 	return ((int)projected_wall_height);
 }
 
@@ -96,14 +94,9 @@ void	cast_rays(t_cub3d *cub)
 			ray_x += cos(ray_angle) * 1.0f;
 			ray_y += sin(ray_angle) * 1.0f;
 		}
-		dist = sqrtf((ray_x - (cub->player->x * TILE + TILE / 2.0f)) *
-				(ray_x - (cub->player->x * TILE + TILE / 2.0f)) +
-				(ray_y - (cub->player->y * TILE + TILE / 2.0f)) *
-				(ray_y - (cub->player->y * TILE + TILE / 2.0f)));
-		dist *= cos(cub->player->rotation_angle - ray_angle);
-		if (dist < 1.0f)
-			dist = 1.0f;
-		draw_wall(cub, i, ray_x, strip_wall_height(dist, ray_angle, cub->player->rotation_angle));
+		dist = (ray_x - (cub->player->x * TILE + TILE / 2.0f)) * cos(ray_angle)
+			+ (ray_y - (cub->player->y * TILE + TILE / 2.0f)) * sin(ray_angle);
+		draw_wall(cub, i, ray_x, strip_wall_height(dist));
 		ray_angle += FOV_ANGLE / NUM_RAYS;
 		i++;
 	}
