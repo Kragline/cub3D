@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																																						*/
-/*																												:::			 ::::::::		*/
-/*	 render.c																						:+:			 :+:		:+:		*/
-/*																										+:+ +:+					+:+			*/
-/*	 By: nasargsy <nasargsy@student.42yerevan.am>		+#+  +:+			 +#+				*/
-/*																								+#+#+#+#+#+		+#+						*/
-/*	 Created: 2025/09/11 13:19:49 by nasargsy					 #+#		#+#							*/
-/*	 Updated: 2025/09/13 17:38:59 by nasargsy					###		########.fr				*/
-/*																																						*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nasargsy <nasargsy@student.42yerevan.am>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/13 18:40:53 by nasargsy          #+#    #+#             */
+/*   Updated: 2025/09/13 19:04:45 by nasargsy         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
@@ -23,22 +23,20 @@ void	cast_rays(t_cub3d *cub)
 	{
 		ray.x = cub->player->x * TILE + TILE / 2.0f;
 		ray.y = cub->player->y * TILE + TILE / 2.0f;
-		while (!map_wall(cub, ray.x	, ray.y))
+		while (!map_wall(cub, ray.x, ray.y))
 		{
 			ray.x += cos(ray.angle) * 1.0f;
 			ray.y += sin(ray.angle) * 1.0f;
 		}
 		ray.dist = sqrt(pow(ray.x - (cub->player->x * TILE + TILE / 2.0f), 2)
-			+ pow(ray.y - (cub->player->y * TILE + TILE / 2.0f), 2))
+				+ pow(ray.y - (cub->player->y * TILE + TILE / 2.0f), 2))
 			* cos(ray.angle - cub->player->rotation_angle);
-		if (fabs(ray.x - round(ray.x / TILE) * TILE) < fabs(ray.y - round(ray.y / TILE) * TILE))
+		if (fabs(ray.x - round(ray.x / TILE) * TILE)
+			< fabs(ray.y - round(ray.y / TILE) * TILE))
 			cub->player->is_vertical = 1;
 		else
 			cub->player->is_vertical = 0;
-		if (cub->player->is_vertical)
-			draw_wall(cub, i, ray.y, ray);
-		else
-			draw_wall(cub, i, ray.x, ray);
+		draw_wall(cub, i, ray);
 		ray.angle += FOV_ANGLE / NUM_RAYS;
 	}
 }
@@ -81,23 +79,28 @@ void	render(t_cub3d *cub)
 {
 	float	move_step;
 	float	strafe_step;
-	float	oldX;
-	float	oldY;
+	float	old_x;
+	float	old_y;
 
-	oldX = cub->player->x;
-	oldY = cub->player->y;
-	cub->player->rotation_angle += cub->player->turn_direction * cub->player->rotation_speed;
+	old_x = cub->player->x;
+	old_y = cub->player->y;
+	cub->player->rotation_angle += cub->player->turn_direction
+		* cub->player->rotation_speed;
 	move_step = cub->player->walk_direction * cub->player->move_speed / TILE;
-	strafe_step = cub->player->strafe_direction * cub->player->move_speed / TILE;
+	strafe_step = cub->player->strafe_direction
+		* cub->player->move_speed / TILE;
 	cub->player->x += cos(cub->player->rotation_angle) * move_step;
 	cub->player->x += cos(cub->player->rotation_angle + M_PI_2) * strafe_step;
 	cub->player->y += sin(cub->player->rotation_angle) * move_step;
 	cub->player->y += sin(cub->player->rotation_angle + M_PI_2) * strafe_step;
 	if (map_wall(cub, cub->player->x * TILE, cub->player->y * TILE))
 	{
-		cub->player->x = oldX;
-		cub->player->y = oldY;
+		cub->player->x = old_x;
+		cub->player->y = old_y;
 	}
-	cast_rays(cub);
-	render_mini_map(cub);
+	else
+	{
+		cast_rays(cub);
+		render_mini_map(cub);
+	}
 }
