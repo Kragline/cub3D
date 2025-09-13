@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:36:33 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/09 15:52:15 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:16:49 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,6 @@ void	put_pixel(t_img *data, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
-void draw_line(t_img *img, int x0, int y0, int x1, int y1, int color)
-{
-	int dx = abs(x1 - x0);
-	int dy = abs(y1 - y0);
-	int sx = (x0 < x1) ? 1 : -1;
-	int sy = (y0 < y1) ? 1 : -1;
-	int err = dx - dy;
-
-	while (1)
-	{
-		put_pixel(img, x0, y0, color);  // Draw pixel at current point
-
-		if (x0 == x1 && y0 == y1)
-			break;
-
-		int e2 = 2 * err;
-
-		if (e2 > -dy)
-		{
-			err -= dy;
-			x0 += sx;
-		}
-		if (e2 < dx)
-		{
-			err += dx;
-			y0 += sy;
-		}
-	}
-}
-
 int	map_wall(t_cub3d *cub, float x, float y)
 {
 	int	map_grid_index_x;
@@ -86,4 +56,24 @@ int	map_wall(t_cub3d *cub, float x, float y)
 	else
 		map_grid_index_y = (int)(y / TILE);
 	return (cub->map->grid[map_grid_index_y][map_grid_index_x] == 1);
+}
+
+int	strip_wall_height(float dist)
+{
+	float	distance_proj_plane;
+	float	projected_wall_height;
+
+	distance_proj_plane = (WIDTH / 2) / tan(FOV_ANGLE / 2);
+	projected_wall_height = (TILE / dist) * distance_proj_plane;
+	return ((int)projected_wall_height);
+}
+
+int	get_pixel(t_img *data, int x, int y)
+{
+	char	*dst;
+	int		offset;
+
+	offset = (y * data->length + x * (data->bpp / 8));
+	dst = data->pixels_ptr + offset;
+	return (*(unsigned int *)dst);
 }
