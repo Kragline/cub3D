@@ -15,34 +15,31 @@
 void	cast_rays(t_cub3d *cub)
 {
 	int		i;
-	float	ray_angle;
-	float	ray_x;
-	float	ray_y;
-	float	dist;
+	t_ray	ray;
 
-	ray_angle = cub->player->rotation_angle - (FOV_ANGLE / 2);
+	ray.angle = cub->player->rotation_angle - (FOV_ANGLE / 2);
 	i = -1;
 	while (++i < NUM_RAYS)
 	{
-		ray_x = cub->player->x * TILE + TILE / 2.0f;
-		ray_y = cub->player->y * TILE + TILE / 2.0f;
-		while (!map_wall(cub, ray_x	, ray_y))
+		ray.x = cub->player->x * TILE + TILE / 2.0f;
+		ray.y = cub->player->y * TILE + TILE / 2.0f;
+		while (!map_wall(cub, ray.x	, ray.y))
 		{
-			ray_x += cos(ray_angle) * 1.0f;
-			ray_y += sin(ray_angle) * 1.0f;
+			ray.x += cos(ray.angle) * 1.0f;
+			ray.y += sin(ray.angle) * 1.0f;
 		}
-		dist = sqrt(pow(ray_x - (cub->player->x * TILE + TILE / 2.0f), 2)
-			+ pow(ray_y - (cub->player->y * TILE + TILE / 2.0f), 2))
-			* cos(ray_angle - cub->player->rotation_angle);
-		if (fabs(ray_x - round(ray_x / TILE) * TILE) < fabs(ray_y - round(ray_y / TILE) * TILE))
+		ray.dist = sqrt(pow(ray.x - (cub->player->x * TILE + TILE / 2.0f), 2)
+			+ pow(ray.y - (cub->player->y * TILE + TILE / 2.0f), 2))
+			* cos(ray.angle - cub->player->rotation_angle);
+		if (fabs(ray.x - round(ray.x / TILE) * TILE) < fabs(ray.y - round(ray.y / TILE) * TILE))
 			cub->player->is_vertical = 1;
 		else
 			cub->player->is_vertical = 0;
 		if (cub->player->is_vertical)
-			draw_wall(cub, i, ray_y, dist);
+			draw_wall(cub, i, ray.y, ray);
 		else
-			draw_wall(cub, i, ray_x, dist);
-		ray_angle += FOV_ANGLE / NUM_RAYS;
+			draw_wall(cub, i, ray.x, ray);
+		ray.angle += FOV_ANGLE / NUM_RAYS;
 	}
 }
 
