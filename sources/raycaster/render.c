@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nasargsy <nasargsy@student.42yerevan.am>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/11 13:19:49 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/13 17:20:54 by nasargsy         ###   ########.fr       */
-/*                                                                            */
+/*																																						*/
+/*																												:::			 ::::::::		*/
+/*	 render.c																						:+:			 :+:		:+:		*/
+/*																										+:+ +:+					+:+			*/
+/*	 By: nasargsy <nasargsy@student.42yerevan.am>		+#+  +:+			 +#+				*/
+/*																								+#+#+#+#+#+		+#+						*/
+/*	 Created: 2025/09/11 13:19:49 by nasargsy					 #+#		#+#							*/
+/*	 Updated: 2025/09/13 17:38:59 by nasargsy					###		########.fr				*/
+/*																																						*/
 /* ************************************************************************** */
 
 #include "cub3D.h"
@@ -31,8 +31,9 @@ void	cast_rays(t_cub3d *cub)
 			ray_x += cos(ray_angle) * 1.0f;
 			ray_y += sin(ray_angle) * 1.0f;
 		}
-		dist = (ray_x - (cub->player->x * TILE + TILE / 2.0f)) * cos(ray_angle)
-			+ (ray_y - (cub->player->y * TILE + TILE / 2.0f)) * sin(ray_angle);
+		dist = sqrt(pow(ray_x - (cub->player->x * TILE + TILE / 2.0f), 2)
+			+ pow(ray_y - (cub->player->y * TILE + TILE / 2.0f), 2))
+			* cos(ray_angle - cub->player->rotation_angle);
 		if (fabs(ray_x - round(ray_x / TILE) * TILE) < fabs(ray_y - round(ray_y / TILE) * TILE))
 			cub->player->is_vertical = 1;
 		else

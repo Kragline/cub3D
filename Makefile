@@ -22,7 +22,7 @@ FILENAMES = main/main cleanup/free init/init init/utils \
 			parsing/additional parsing/allocate_map parsing/element_parsing \
 			parsing/element_parsing_utils parsing/parsing_checks \
 			parsing/parsing_utils parsing/parsing parsing/prints parsing/dfs \
-			raycaster/mini_map raycaster/utils raycaster/cast raycaster/render
+			raycaster/utils raycaster/draw raycaster/render
 
 SOURCES = $(addsuffix .c, $(addprefix $(SOURCES_DIR), $(FILENAMES)))
 OBJECTS = $(addsuffix .o, $(addprefix $(OBJECTS_DIR), $(FILENAMES)))
