@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 18:40:53 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/14 13:06:11 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/14 20:36:39 by nasargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,36 +79,34 @@ void	render_mini_map(t_cub3d *cub)
 	mlx_put_image_to_window(cub->mlx, cub->mlx_win, cub->img->img_ptr, 0, 0);
 }
 
-static void	get_old_coords(t_cub3d *cub, float *old_x, float *old_y)
-{
-	*old_x = cub->player->x;
-	*old_y = cub->player->y;
-}
-
-void	render(t_cub3d *cub)
+static void	get_new_coords(t_cub3d *cub, float *new_x, float *new_y)
 {
 	float	move_step;
 	float	strafe_step;
-	float	old_x;
-	float	old_y;
 
-	get_old_coords(cub, &old_x, &old_y);
+	*new_x = cub->player->x;
+	*new_y = cub->player->y;
 	cub->player->rotation_angle += cub->player->turn_direction
 		* cub->player->rotation_speed;
 	move_step = cub->player->walk_direction * cub->player->move_speed / TILE;
 	strafe_step = cub->player->strafe_direction
 		* cub->player->move_speed / TILE;
-	cub->player->x += cos(cub->player->rotation_angle) * move_step;
-	cub->player->x += cos(cub->player->rotation_angle + M_PI_2) * strafe_step;
-	cub->player->y += sin(cub->player->rotation_angle) * move_step;
-	cub->player->y += sin(cub->player->rotation_angle + M_PI_2) * strafe_step;
-	if (map_wall(cub, cub->player->x * TILE, cub->player->y * TILE))
+	*new_x += cos(cub->player->rotation_angle) * move_step;
+	*new_x += cos(cub->player->rotation_angle + M_PI_2) * strafe_step;
+	*new_y += sin(cub->player->rotation_angle) * move_step;
+	*new_y += sin(cub->player->rotation_angle + M_PI_2) * strafe_step;
+}
+
+void	render(t_cub3d *cub)
+{
+	float	new_x;
+	float	new_y;
+
+	get_new_coords(cub, &new_x, &new_y);
+	if (!map_wall(cub, new_x * TILE + TILE / 2.0f, new_y * TILE + TILE / 2.0f))
 	{
-		cub->player->x = old_x;
-		cub->player->y = old_y;
-	}
-	else
-	{
+		cub->player->x = new_x;
+		cub->player->y = new_y;
 		cast_rays(cub);
 		render_mini_map(cub);
 	}
