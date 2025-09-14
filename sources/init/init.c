@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/11 20:56:15 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:31:26 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	close_handle(t_cub3d *cub)
 {
 	free_cub(cub);
-	exit(1);
+	exit(0);
 }
 
 static int	mouse_handle(int button, int x, int y, t_cub3d *cub)
@@ -30,10 +30,7 @@ static int	mouse_handle(int button, int x, int y, t_cub3d *cub)
 static int	key_handle(int keysym, t_cub3d *cub)
 {
 	if (keysym == XK_Escape)
-	{
-		free_cub(cub);
-		exit (1);
-	}
+		close_handle(cub);
 	mlx_destroy_image(cub->mlx, cub->img->img_ptr);
 	cub->img->img_ptr = mlx_new_image(cub->mlx, WIDTH,
 			HEIGHT);

@@ -18,7 +18,7 @@ HEADER_DIR = include/
 SOURCES_DIR = sources/
 OBJECTS_DIR = objects/
 
-FILENAMES = main/main cleanup/free init/init init/utils \
+FILENAMES = main/main cleanup/free cleanup/utils init/init init/utils \
 			parsing/additional parsing/allocate_map parsing/element_parsing \
 			parsing/element_parsing_utils parsing/parsing_checks \
 			parsing/parsing_utils parsing/parsing parsing/prints parsing/dfs \
