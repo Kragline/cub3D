@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nasargsy <nasargsy@student.42yerevan.am>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 18:39:21 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/13 18:58:45 by nasargsy         ###   ########.fr       */
-/*                                                                            */
+/*																																						*/
+/*																												:::			 ::::::::		*/
+/*	 draw.c																							:+:			 :+:		:+:		*/
+/*																										+:+ +:+					+:+			*/
+/*	 By: nasargsy <nasargsy@student.42yerevan.am>		+#+  +:+			 +#+				*/
+/*																								+#+#+#+#+#+		+#+						*/
+/*	 Created: 2025/09/13 18:39:21 by nasargsy					 #+#		#+#							*/
+/*	 Updated: 2025/09/14 11:05:34 by nasargsy					###		########.fr				*/
+/*																																						*/
 /* ************************************************************************** */
 
 #include "cub3D.h"
@@ -23,20 +23,19 @@ static t_img	*choose_texture(t_cub3d *cub, t_ray ray)
 {
 	t_img	*res;
 
-	if (fabs(ray.x - round(ray.x / TILE) * TILE)
-		< fabs(ray.y - round(ray.y / TILE) * TILE))
+	if (cub->player->is_vertical)
 	{
-		if (ray.x > cub->player->x * TILE)
+		if (cos(ray.angle) > 0)
 			res = cub->textures->east;
 		else
 			res = cub->textures->west;
 	}
 	else
 	{
-		if (ray.y > cub->player->y * TILE)
-			res = cub->textures->south;
-		else
+		if (sin(ray.angle) < 0)
 			res = cub->textures->north;
+		else
+			res = cub->textures->south;
 	}
 	return (res);
 }
