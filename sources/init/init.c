@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/14 12:31:26 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:45:46 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@ static int	close_handle(t_cub3d *cub)
 {
 	free_cub(cub);
 	exit(0);
-}
-
-static int	mouse_handle(int button, int x, int y, t_cub3d *cub)
-{
-	(void)button;
-	(void)x;
-	(void)y;
-	(void)cub;
-	return (0);
 }
 
 static int	key_handle(int keysym, t_cub3d *cub)
@@ -78,8 +69,6 @@ void	init_window(t_cub3d *cub)
 	render(cub);
 	mlx_hook(cub->mlx_win,
 		KeyPress, KeyPressMask, key_handle, cub);
-	mlx_hook(cub->mlx_win,
-		ButtonPress, ButtonPressMask, mouse_handle, cub);
 	mlx_hook(cub->mlx_win,
 		DestroyNotify, StructureNotifyMask, close_handle, cub);
 	mlx_loop(cub->mlx);

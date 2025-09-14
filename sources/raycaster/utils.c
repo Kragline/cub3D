@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:36:33 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/14 11:43:38 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/14 13:06:15 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	strip_wall_height(float dist)
 	float	distance_proj_plane;
 	float	projected_wall_height;
 
-	distance_proj_plane = (WIDTH / 2) / tan(FOV_ANGLE / 2);
+	distance_proj_plane = (WIDTH / 2) / tan((60 * (M_PI / 180)) / 2);
 	projected_wall_height = (TILE / dist) * distance_proj_plane;
 	return ((int)projected_wall_height);
 }

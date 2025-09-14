@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:03:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/11 15:40:07 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:54:49 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ static void	parse_texture(char **line, int index, char **dest, t_cub3d *cub)
 	(*dest) = ft_substr((*line) + start_index, 0, i - start_index);
 	if (!ends_with_xpm(*dest))
 		parsing_error(cub, NULL, line, "Texture must have .xpm extension");
-	// (*dest)->img_ptr = mlx_xpm_file_to_image(cub->mlx, name, &width, &height);
-	// (*dest)->pixels_ptr = mlx_get_data_addr((*dest)->img_ptr, &((*dest)->bpp),
-	// 	&((*dest)->length),
-	// 	&((*dest)->endian));
-	// if (!*dest)
-	// 	parsing_error(cub, NULL, line, "Failed to create mlx image");
 }
 
 static void	parse_color(char **line, int index, int *dest, t_cub3d *cub)

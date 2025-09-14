@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/17 15:50:38 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/13 16:57:56 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/14 13:05:24 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ typedef struct s_player
 {
 	float		x;
 	float		y;
-	int		radius;
-	int		turn_direction;
-	int		walk_direction;
-	int		strafe_direction;
-	float	rotation_angle;
-	float	move_speed;
-	float	rotation_speed;
-	int		is_vertical;
+	int			radius;
+	int			turn_direction;
+	int			walk_direction;
+	int			strafe_direction;
+	float		rotation_angle;
+	float		move_speed;
+	float		rotation_speed;
+	int			is_vertical;
 }	t_player;
 
 typedef struct s_cub3d
