@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 12:55:10 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/14 12:55:12 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/15 13:19:25 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ static t_img	*choose_texture(t_cub3d *cub, t_ray ray)
 	if (cub->player->is_vertical)
 	{
 		if (cos(ray.angle) > 0)
-			res = cub->textures->east;
-		else
 			res = cub->textures->west;
+		else
+			res = cub->textures->east;
 	}
 	else
 	{
 		if (sin(ray.angle) < 0)
-			res = cub->textures->north;
-		else
 			res = cub->textures->south;
+		else
+			res = cub->textures->north;
 	}
 	return (res);
 }
