@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:56:45 by armarake          #+#    #+#             */
-/*   Updated: 2025/08/31 18:05:36 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:54:30 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static void	change_the_line(bool change_line, char **line, t_cub3d *cub)
 		}
 		*line = get_next_line(cub->map->map_fd);
 		cub->map->lines_read++;
-		if (!*line && !cub->map->grid)
-			parsing_error(cub, NULL, line, "Invalid file: no map");
 		if (!*line)
 			parsing_error(cub, NULL, line, "Invalid file");
 	}
@@ -39,6 +37,12 @@ static bool	st_elems(char **line, bool *change_line,
 		return (true);
 	if (is_map_line(*line))
 	{
+		if (missing_elements(cub))
+		{
+			free(*line);
+			*line = NULL;
+			parsing_error(cub, NULL, NULL, NULL);
+		}
 		*state = ST_MAP;
 		*change_line = false;
 		return (true);

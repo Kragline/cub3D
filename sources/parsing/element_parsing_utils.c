@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:00:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/11 15:10:22 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:53:22 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void	texture_name_check(char **name, char **line, t_cub3d *cub)
 void	texture_checks(int *i, char **line, t_cub3d *cub)
 {
 	if (!(*line)[*i] || (*line)[*i] == '\n')
-		parsing_error(cub, NULL, line, "Wrong value for texture");
+		parsing_error(cub, NULL, line, "Texture path missing");
 	while ((*line)[*i] && is_space((*line)[*i]))
 		(*i)++;
 	if (!(*line)[*i] || (*line)[*i] == '\n')
-		parsing_error(cub, NULL, line, "Wrong value for texture");
+		parsing_error(cub, NULL, line, "Texture path missing");
 }
 
 bool	ends_with_xpm(char *filename)

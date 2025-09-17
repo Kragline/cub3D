@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:03:17 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/14 12:54:49 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:07:38 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ bool	try_parse_element(char **line, t_cub3d *cub)
 			return (false);
 		i++;
 	}
-	if (!ft_strncmp(*line + i, "NO ", 3))
+	if (!ft_strncmp(*line + i, "NO", 2))
 		return (parse_texture(line, i + 2, &cub->textures->n_name, cub), true);
-	else if (!ft_strncmp(*line + i, "SO ", 3))
+	else if (!ft_strncmp(*line + i, "SO", 2))
 		return (parse_texture(line, i + 2, &cub->textures->s_name, cub), true);
-	else if (!ft_strncmp(*line + i, "WE ", 3))
+	else if (!ft_strncmp(*line + i, "WE", 2))
 		return (parse_texture(line, i + 2, &cub->textures->w_name, cub), true);
-	else if (!ft_strncmp(*line + i, "EA ", 3))
+	else if (!ft_strncmp(*line + i, "EA", 2))
 		return (parse_texture(line, i + 2, &cub->textures->e_name, cub), true);
-	else if (!ft_strncmp(*line + i, "F ", 2))
+	else if ((*line)[i] == 'F')
 		return (parse_color(line, i + 1, &cub->colors->floor, cub), true);
-	else if (!ft_strncmp(*line + i, "C ", 2))
+	else if ((*line)[i] == 'C')
 		return (parse_color(line, i + 1, &cub->colors->ceiling, cub), true);
 	return (false);
 }
