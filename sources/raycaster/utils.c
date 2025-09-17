@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:36:33 by nasargsy          #+#    #+#             */
-/*   Updated: 2025/09/14 20:42:35 by nasargsy         ###   ########.fr       */
+/*   Updated: 2025/09/17 16:17:57 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	map_wall(t_cub3d *cub, float x, float y)
 	map_grid_index_x = (int)floor(x / TILE);
 	map_grid_index_y = (int)floor(y / TILE);
 	if (map_grid_index_x < 0 || map_grid_index_x >= cub->map->cols
-			|| map_grid_index_y < 0 || map_grid_index_y >= cub->map->rows)
+		|| map_grid_index_y < 0 || map_grid_index_y >= cub->map->rows)
 		return (1);
 	return (cub->map->grid[map_grid_index_y][map_grid_index_x] == 1);
 }

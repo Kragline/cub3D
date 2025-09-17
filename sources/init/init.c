@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:56:47 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/17 14:39:39 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/17 16:16:42 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,39 +82,19 @@ static bool	allocate_textures(t_cub3d *cub)
 	cub->textures->east = malloc(sizeof(t_img));
 	if (!cub->textures->east)
 		return (free_cub(cub), false);
-	cub->textures->east->img_ptr = NULL;
-	cub->textures->east->pixels_ptr = NULL;
-	cub->textures->east->bpp = 0;
-	cub->textures->east->length = 0;
-	cub->textures->east->endian = 0;
-
+	set_img_nulls(&(cub->textures->east));
 	cub->textures->west = malloc(sizeof(t_img));
 	if (!cub->textures->west)
 		return (free_cub(cub), false);
-	cub->textures->west->img_ptr = NULL;
-	cub->textures->west->pixels_ptr = NULL;
-	cub->textures->west->bpp = 0;
-	cub->textures->west->length = 0;
-	cub->textures->west->endian = 0;
-
+	set_img_nulls(&(cub->textures->west));
 	cub->textures->south = malloc(sizeof(t_img));
 	if (!cub->textures->south)
 		return (free_cub(cub), false);
-	cub->textures->south->img_ptr = NULL;
-	cub->textures->south->pixels_ptr = NULL;
-	cub->textures->south->bpp = 0;
-	cub->textures->south->length = 0;
-	cub->textures->south->endian = 0;
-
+	set_img_nulls(&(cub->textures->south));
 	cub->textures->north = malloc(sizeof(t_img));
 	if (!cub->textures->north)
 		return (free_cub(cub), false);
-	cub->textures->north->img_ptr = NULL;
-	cub->textures->north->pixels_ptr = NULL;
-	cub->textures->north->bpp = 0;
-	cub->textures->north->length = 0;
-	cub->textures->north->endian = 0;
-
+	set_img_nulls(&(cub->textures->north));
 	return (true);
 }
 

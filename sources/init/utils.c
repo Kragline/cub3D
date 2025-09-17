@@ -6,7 +6,7 @@
 /*   By: armarake <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 15:13:14 by armarake          #+#    #+#             */
-/*   Updated: 2025/09/14 12:54:24 by armarake         ###   ########.fr       */
+/*   Updated: 2025/09/17 16:15:25 by armarake         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,13 @@ void	initialize_textures(t_cub3d *cub)
 			&(cub->textures->south->bpp),
 			&(cub->textures->south->length),
 			&(cub->textures->south->endian));
+}
+
+void	set_img_nulls(t_img **img)
+{
+	(*img)->img_ptr = NULL;
+	(*img)->pixels_ptr = NULL;
+	(*img)->bpp = 0;
+	(*img)->length = 0;
+	(*img)->endian = 0;
 }
