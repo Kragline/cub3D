@@ -1,7 +1,0 @@
-NO ./textures/door.xpm
-SO ./textures/eagle.xpm
-WE ./textures/fuhrer.xpm
-EA ./textures/wall.xpm
-
-F 220,100,0
-C 225,30,0
