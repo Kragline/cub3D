@@ -26,8 +26,8 @@
 # define BLUE "\033[0;34m"
 # define PURPLE "\033[0;35m"
 
-# define WIDTH 1080
-# define HEIGHT 720
+# define WIDTH 1440
+# define HEIGHT 1080
 
 typedef enum e_state
 {
