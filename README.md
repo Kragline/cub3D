@@ -30,8 +30,7 @@ cd cub3D
 
 2) Clone and build MinilibX (Linux):
 ```bash
-git clone https://github.com/42Paris/minilibx-linux.git deps/minilibx
-make -C deps/minilibx
+git clone https://github.com/42Paris/minilibx-linux.git
 ```
 
 3) Build cub3D:
