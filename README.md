@@ -77,5 +77,5 @@ C 255,255,255
 
 ## Screenshots
 
-![Screenshot 1](screenshots/screenshot-1.png)
-![Screenshot 2](screenshots/screenshot-2.png)
+![Screenshot 1](screenshots/minecraft_screenshot.png)
+![Screenshot 2](screenshots/pacman_screenshot.png)
